@@ -1,0 +1,158 @@
+.toggleRow {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 44px;
+}
+.toggleOpt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  border: 1px solid transparent;
+  transition:
+    color 0.2s var(--ease),
+    background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+.toggleOpt:hover {
+  color: var(--ink);
+}
+.toggleActive {
+  background: var(--surface);
+  border-color: var(--line-2);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.saveChip {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ok);
+  background: var(--ok-soft);
+  border-radius: 99px;
+  padding: 2px 7px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.featured {
+  border: 1.5px solid var(--ink);
+  box-shadow: var(--shadow-2);
+}
+.featured .planName {
+  padding-right: 90px;
+}
+.featuredChip {
+  position: absolute;
+  top: 26px;
+  right: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--ink);
+  color: var(--bg);
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 9px;
+  border-radius: 99px;
+  letter-spacing: 0.01em;
+}
+
+.planName {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.blurb {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-top: 6px;
+  min-height: 40px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin: 18px 0 20px;
+  min-height: 46px;
+}
+.price {
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.per {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.35;
+  max-width: 120px;
+}
+
+.features {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--ink-2);
+  letter-spacing: -0.008em;
+  line-height: 1.45;
+}
+.feature svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--ink);
+}
+
+.note {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+  .featured {
+    order: -1;
+  }
+  .blurb {
+    min-height: 0;
+  }
+}
