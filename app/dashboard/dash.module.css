@@ -127,6 +127,13 @@
   font-size: 12.8px;
   color: var(--ink-2);
   border-radius: 7px;
+  transition:
+    background-color 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+.agentMini:hover {
+  background: var(--fill);
+  color: var(--ink);
 }
 .agentMiniMeta {
   margin-left: auto;
@@ -192,7 +199,6 @@
 }
 .userName {
   font-size: 13px;
-  font-weight: 550;
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -254,6 +260,34 @@
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
 }
+/* Route-change progress hairline along the topbar's bottom edge */
+.routeProgress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 100%;
+  background: var(--ink);
+  border-radius: 99px;
+  transform-origin: left;
+  animation: routeBar 0.55s var(--ease) both;
+  pointer-events: none;
+}
+@keyframes routeBar {
+  0% {
+    transform: scaleX(0);
+    opacity: 0.9;
+  }
+  60% {
+    transform: scaleX(0.74);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
 .menuToggle {
   display: none;
   width: 32px;
@@ -278,7 +312,6 @@
   color: var(--ink-3);
 }
 .crumbPage {
-  font-weight: 550;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
@@ -490,6 +523,21 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.03);
 }
 
+/* Settings tabs crossfade-slide in when switched */
+.tabIn {
+  animation: tabIn 0.3s var(--ease-out) both;
+}
+@keyframes tabIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* ---------- Settings ---------- */
 .settingsLayout {
   display: grid;
@@ -516,6 +564,7 @@
 }
 .settingsNavBtn:hover {
   color: var(--ink);
+  background: var(--fill);
 }
 .settingsNavOn {
   background: var(--fill);
@@ -549,7 +598,6 @@
 }
 .setTitle {
   font-size: 13.8px;
-  font-weight: 550;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
@@ -638,6 +686,15 @@
   letter-spacing: -0.01em;
   color: var(--ink);
   text-align: left;
+  transition:
+    background-color 0.15s var(--ease),
+    color 0.15s var(--ease);
+}
+.palItem svg {
+  transition: transform 0.2s var(--ease);
+}
+.palItemActive svg:first-child {
+  transform: scale(1.06);
 }
 .palItem svg {
   color: var(--ink-3);

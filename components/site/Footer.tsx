@@ -46,7 +46,7 @@ export default function Footer() {
             future than manage their inbox.
           </p>
           <div className={styles.status}>
-            <span className="dot dot-ok" />
+            <span className="dot dot-pulse" />
             All systems operational
           </div>
         </div>

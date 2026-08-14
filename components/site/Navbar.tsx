@@ -39,9 +39,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header
-        className={`${styles.nav} glass ${scrolled ? styles.scrolled : ""}`}
-      >
+      <header className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
         <div className={`container ${styles.inner}`}>
           <Link href="/" className={styles.brand} aria-label="NOVA home">
             <LogoMark size={21} />

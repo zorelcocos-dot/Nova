@@ -24,18 +24,13 @@ export default function Accordion({
                 aria-controls={`faq-panel-${i}`}
                 onClick={() => setOpenIdx(open ? null : i)}
               >
-                <span>{item.q}</span>
+                <span className={styles.qtext}>{item.q}</span>
                 <span className={styles.iconWrap} aria-hidden>
                   <IconPlus size={15} />
                 </span>
               </button>
             </h3>
-            <div
-              id={`faq-panel-${i}`}
-              role="region"
-              className={styles.panel}
-              style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
-            >
+            <div id={`faq-panel-${i}`} role="region" className={styles.panel}>
               <div className={styles.panelInner}>
                 <p className={styles.answer}>{item.a}</p>
               </div>

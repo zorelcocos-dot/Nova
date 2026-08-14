@@ -60,7 +60,16 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
           </Link>
         )}
         <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: 4 }}>
-          {loading ? "One moment…" : isSignup ? "Create workspace" : "Log in"}
+          {loading ? (
+            <>
+              <span className="spinner" aria-hidden />
+              One moment…
+            </>
+          ) : isSignup ? (
+            "Create workspace"
+          ) : (
+            "Log in"
+          )}
         </button>
       </form>
 

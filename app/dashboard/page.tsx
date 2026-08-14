@@ -8,6 +8,7 @@ import {
   IconPlus,
 } from "@/components/icons";
 import { agents, automations, activityFeed } from "@/lib/data";
+import CountUp from "@/components/CountUp";
 import d from "./dash.module.css";
 import m from "@/components/mock/mock.module.css";
 
@@ -51,7 +52,9 @@ export default function DashboardOverview() {
               <s.icon size={14} />
               {s.label}
             </div>
-            <div className={d.statValue}>{s.value}</div>
+            <div className={d.statValue}>
+              <CountUp value={s.value} duration={1100} />
+            </div>
             <div className={d.statFoot}>
               <span className={d.statDelta}>↑ {s.delta} vs last week</span>
               <span style={{ color: "var(--ink-3)" }}>

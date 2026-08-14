@@ -82,7 +82,7 @@ export default function SettingsClient() {
           ))}
         </nav>
 
-        <div>
+        <div key={tab} className={d.tabIn}>
           {tab === "Workspace" && (
             <>
               <div className={d.settingsPanel}>

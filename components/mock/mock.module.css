@@ -93,7 +93,6 @@
 }
 .workspaceName {
   font-size: 13px;
-  font-weight: 550;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
@@ -266,7 +265,6 @@
 }
 .delta {
   font-size: 11px;
-  font-weight: 550;
   font-weight: 500;
   color: var(--ok);
   display: inline-flex;
@@ -300,6 +298,13 @@
   border-radius: var(--r-m);
   background: var(--surface);
   overflow: hidden;
+  transition:
+    border-color 0.28s var(--ease),
+    box-shadow 0.28s var(--ease);
+}
+.card:hover {
+  border-color: var(--line-2);
+  box-shadow: var(--shadow-1);
 }
 .cardHead {
   display: flex;
@@ -351,7 +356,6 @@
 }
 .agentName {
   font-size: 12.8px;
-  font-weight: 550;
   font-weight: 500;
   letter-spacing: -0.01em;
   display: flex;
@@ -380,6 +384,7 @@
   height: 100%;
   background: var(--ink);
   border-radius: 99px;
+  transition: width 1.4s var(--ease);
 }
 
 /* ---------- Activity feed ---------- */
@@ -395,6 +400,20 @@
 .feedRow:last-child {
   border: none;
 }
+/* A fresh activity item gliding into the live feed */
+.feedRowNew {
+  animation: feedIn 0.55s var(--ease-out) both;
+}
+@keyframes feedIn {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 .feedTime {
   margin-left: auto;
   font-size: 11.5px;
@@ -403,7 +422,6 @@
   flex: none;
 }
 .feedWho {
-  font-weight: 550;
   font-weight: 500;
 }
 
@@ -455,7 +473,6 @@
 }
 .nodeTitle {
   font-size: 13px;
-  font-weight: 550;
   font-weight: 500;
   letter-spacing: -0.012em;
   margin-top: 5px;
@@ -477,18 +494,139 @@
   z-index: 0;
   pointer-events: none;
 }
-.edge path {
-  stroke: rgba(0, 0, 0, 0.22);
-  stroke-width: 1.4;
+.edgeBase path {
+  stroke: rgba(0, 0, 0, 0.18);
+  stroke-width: 1.3;
   fill: none;
-  stroke-dasharray: 5 5;
-  animation: edgeFlow 1.6s linear infinite;
 }
-@keyframes edgeFlow {
-  to {
-    stroke-dashoffset: -10;
+.edgeSignal path {
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 8 92;
+  stroke-dashoffset: 108;
+  opacity: 0;
+}
+
+/* Status dot on each node — lights up with the node */
+.node::after {
+  content: "";
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* ---- The run — one 8s cycle, gated by .canvasPlay ---- */
+.canvasPlay .n1 { animation: wfN1 8s var(--ease) infinite; }
+.canvasPlay .n2 { animation: wfN2 8s var(--ease) infinite; }
+.canvasPlay .n3 { animation: wfN3 8s var(--ease) infinite; }
+.canvasPlay .n4 { animation: wfN4 8s var(--ease) infinite; }
+.canvasPlay .n5 { animation: wfN5 8s var(--ease) infinite; }
+.canvasPlay .n1::after { animation: wfD1 8s var(--ease-spring) infinite; }
+.canvasPlay .n2::after { animation: wfD2 8s var(--ease-spring) infinite; }
+.canvasPlay .n3::after { animation: wfD3 8s var(--ease-spring) infinite; }
+.canvasPlay .n4::after { animation: wfD4 8s var(--ease-spring) infinite; }
+.canvasPlay .n5::after { animation: wfD5 8s var(--ease-spring) infinite; }
+.canvasPlay .sig1 { animation: wfS1 8s linear infinite; }
+.canvasPlay .sig2 { animation: wfS2 8s linear infinite; }
+.canvasPlay .sig3 { animation: wfS3 8s linear infinite; }
+
+@keyframes wfN1 {
+  0%, 1% { border-color: var(--line); box-shadow: var(--shadow-1); }
+  3%, 78% {
+    border-color: rgba(0, 102, 204, 0.42);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.07), var(--shadow-1);
   }
+  86%, 100% { border-color: var(--line); box-shadow: var(--shadow-1); }
 }
+@keyframes wfN2 {
+  0%, 19% { border-color: var(--line); box-shadow: var(--shadow-1); }
+  21%, 80% {
+    border-color: rgba(0, 102, 204, 0.42);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.07), var(--shadow-1);
+  }
+  87%, 100% { border-color: var(--line); box-shadow: var(--shadow-1); }
+}
+@keyframes wfN3 {
+  0%, 38% { border-color: var(--line); box-shadow: var(--shadow-1); }
+  40%, 82% {
+    border-color: rgba(0, 102, 204, 0.42);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.07), var(--shadow-1);
+  }
+  88%, 100% { border-color: var(--line); box-shadow: var(--shadow-1); }
+}
+@keyframes wfN4 {
+  0%, 38% { border-color: var(--line); box-shadow: var(--shadow-1); }
+  40%, 82% {
+    border-color: rgba(0, 102, 204, 0.42);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.07), var(--shadow-1);
+  }
+  88%, 100% { border-color: var(--line); box-shadow: var(--shadow-1); }
+}
+@keyframes wfN5 {
+  0%, 59% { border-color: var(--line); box-shadow: var(--shadow-1); }
+  61%, 84% {
+    border-color: rgba(0, 102, 204, 0.42);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.07), var(--shadow-1);
+  }
+  90%, 100% { border-color: var(--line); box-shadow: var(--shadow-1); }
+}
+
+@keyframes wfD1 {
+  0%, 1% { opacity: 0; transform: scale(0.5); }
+  3.5%, 78% { opacity: 1; transform: scale(1); }
+  86%, 100% { opacity: 0; transform: scale(0.5); }
+}
+@keyframes wfD2 {
+  0%, 19% { opacity: 0; transform: scale(0.5); }
+  21.5%, 80% { opacity: 1; transform: scale(1); }
+  87%, 100% { opacity: 0; transform: scale(0.5); }
+}
+@keyframes wfD3 {
+  0%, 38% { opacity: 0; transform: scale(0.5); }
+  40.5%, 82% { opacity: 1; transform: scale(1); }
+  88%, 100% { opacity: 0; transform: scale(0.5); }
+}
+@keyframes wfD4 {
+  0%, 38% { opacity: 0; transform: scale(0.5); }
+  40.5%, 82% { opacity: 1; transform: scale(1); }
+  88%, 100% { opacity: 0; transform: scale(0.5); }
+}
+@keyframes wfD5 {
+  0%, 59% { opacity: 0; transform: scale(0.5); }
+  61.5%, 84% { opacity: 1; transform: scale(1); }
+  90%, 100% { opacity: 0; transform: scale(0.5); }
+}
+
+@keyframes wfS1 {
+  0%, 11% { stroke-dashoffset: 108; opacity: 0; }
+  12% { opacity: 1; }
+  19% { opacity: 1; }
+  20% { stroke-dashoffset: -8; opacity: 0; }
+  100% { stroke-dashoffset: -8; opacity: 0; }
+}
+@keyframes wfS2 {
+  0%, 30% { stroke-dashoffset: 108; opacity: 0; }
+  31% { opacity: 1; }
+  38% { opacity: 1; }
+  39% { stroke-dashoffset: -8; opacity: 0; }
+  100% { stroke-dashoffset: -8; opacity: 0; }
+}
+@keyframes wfS3 {
+  0%, 51% { stroke-dashoffset: 108; opacity: 0; }
+  52% { opacity: 1; }
+  59% { opacity: 1; }
+  60% { stroke-dashoffset: -8; opacity: 0; }
+  100% { stroke-dashoffset: -8; opacity: 0; }
+}
+
 .branchCol {
   display: flex;
   flex-direction: column;
@@ -514,7 +652,6 @@
 }
 .consoleTitle {
   font-size: 12.8px;
-  font-weight: 550;
   font-weight: 500;
   letter-spacing: -0.006em;
 }
@@ -704,6 +841,29 @@
   flex-direction: column;
   gap: 14px;
   box-shadow: var(--shadow-1);
+  transition:
+    border-color 0.28s var(--ease),
+    box-shadow 0.28s var(--ease),
+    background-color 0.28s var(--ease),
+    transform 0.28s var(--ease);
+}
+.agentCardHover {
+  border-color: var(--line-2);
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+}
+.agentCardHover .agentCardTile {
+  transform: translateY(-1px);
+}
+.agentCardTile {
+  transition: transform 0.28s var(--ease);
+}
+/* Hovering a working agent quickens its pulse just slightly */
+.agentCardActive .statusChip .dot-pulse {
+  animation-duration: 2.2s;
+}
+.agentCardHover.agentCardActive .statusChip .dot-pulse {
+  animation-duration: 1.3s;
 }
 .agentCardHead {
   display: flex;
@@ -735,7 +895,6 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  font-weight: 550;
   font-weight: 500;
   padding: 3px 9px;
   border-radius: 99px;
@@ -780,6 +939,7 @@
   height: 100%;
   background: var(--ink);
   border-radius: 99px;
+  transition: width 1.6s var(--ease);
 }
 .actionList {
   display: flex;
@@ -798,6 +958,20 @@
 .actionRow:last-child {
   border: none;
   padding-bottom: 0;
+}
+/* Next activity line crossfading in on hover */
+.actionRowNew {
+  animation: actionIn 0.45s var(--ease-out) both;
+}
+@keyframes actionIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .actionTime {
   flex: none;
@@ -825,6 +999,52 @@
 .agentStat span {
   font-size: 10.5px;
   color: var(--ink-3);
+}
+
+/* ---------- In-view reveals (console + rule builder) ---------- */
+/* Rows of the run log write themselves in, one after another */
+.consolePlay .logRow {
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.45s var(--ease),
+    transform 0.45s var(--ease);
+}
+.consolePlay .logRowIn {
+  opacity: 1;
+  transform: none;
+}
+
+/* Rule steps cascade in; the rail line grows to meet the next step */
+.rulePlay .step {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.55s var(--ease-out),
+    transform 0.55s var(--ease-out);
+}
+.rulePlay .stepIn {
+  opacity: 1;
+  transform: none;
+}
+.rulePlay .stepLine {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s var(--ease-out) 0.35s;
+}
+.rulePlay .stepIn .stepLine {
+  transform: scaleY(1);
+}
+.rulePlay .stepDot {
+  transition:
+    border-color 0.3s var(--ease),
+    color 0.3s var(--ease),
+    background-color 0.3s var(--ease);
+}
+.rulePlay .stepIn .stepDot {
+  border-color: var(--line-2);
+  color: var(--ink);
+  background: var(--surface);
 }
 
 /* ---------- Integration tile ---------- */
@@ -855,6 +1075,11 @@
   display: grid;
   place-items: center;
   color: var(--ink);
+  transition: transform 0.28s var(--ease), border-color 0.28s var(--ease);
+}
+.intTile:hover .intIcon {
+  transform: translateY(-2px);
+  border-color: var(--line-2);
 }
 .intName {
   font-size: 13.5px;
@@ -869,6 +1094,40 @@
   font-size: 12.5px;
   color: var(--ink-2);
   line-height: 1.5;
+}
+
+/* Touch: keep the border/shadow feedback, drop the sticky lift */
+@media (hover: none) {
+  .intTile:hover,
+  .agentCardHover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feedRowNew,
+  .actionRowNew {
+    animation: none;
+  }
+  .consolePlay .logRow,
+  .rulePlay .step {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rulePlay .stepLine {
+    transform: none;
+    transition: none;
+  }
+  .canvasPlay .node,
+  .canvasPlay .node::after,
+  .canvasPlay .edgeSignal path {
+    animation: none;
+  }
+  .progress i,
+  .taskProgress i {
+    transition: none;
+  }
 }
 
 /* ---------- Responsive ---------- */

@@ -189,7 +189,7 @@ export default function FeaturesPage() {
                       { label: "Research", value: 384 },
                       { label: "Data", value: 693 },
                     ]}
-                    format={(v) => v.toLocaleString()}
+                    comma
                   />
                 </div>
               </div>

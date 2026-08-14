@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import CountUp from "@/components/CountUp";
 import s from "../sub.module.css";
 
 export const metadata: Metadata = {
@@ -65,13 +66,13 @@ export default function AboutPage() {
         <Reveal>
           <div className={s.statsGrid} style={{ paddingBottom: 72 }}>
             {[
-              ["2022", "Founded in San Francisco"],
-              ["127", "People, 14 countries, one timezone bias (UTC±3)"],
-              ["4,000+", "Teams run their operations on NOVA"],
-              ["4.1M", "Tasks automated every month"],
-            ].map(([v, l]) => (
-              <div key={l} className={s.statCell}>
-                <b>{v}</b>
+              ["2022", "Founded in San Francisco", false],
+              ["127", "People, 14 countries, one timezone bias (UTC±3)", true],
+              ["4,000+", "Teams run their operations on NOVA", true],
+              ["4.1M", "Tasks automated every month", true],
+            ].map(([v, l, count]) => (
+              <div key={l as string} className={s.statCell}>
+                <b>{count ? <CountUp value={v as string} /> : v}</b>
                 <span>{l}</span>
               </div>
             ))}

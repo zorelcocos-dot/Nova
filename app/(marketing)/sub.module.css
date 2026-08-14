@@ -72,6 +72,10 @@
   color: var(--bg);
   display: grid;
   place-items: center;
+  transition: transform 0.3s var(--ease-spring);
+}
+.kicker:hover .kickerIcon {
+  transform: translateY(-1px) rotate(-3deg);
 }
 .featRowCopy h2 {
   margin-bottom: 14px;
@@ -160,6 +164,15 @@
   border-radius: var(--r-l);
   background: var(--surface);
   padding: 24px;
+  transition:
+    border-color 0.28s var(--ease),
+    box-shadow 0.28s var(--ease),
+    transform 0.28s var(--ease);
+}
+.tileCard:hover {
+  border-color: var(--line-2);
+  box-shadow: var(--shadow-1);
+  transform: translateY(-2px);
 }
 .tileTitle {
   font-size: 15px;
@@ -181,6 +194,19 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  transition:
+    border-color 0.28s var(--ease),
+    box-shadow 0.28s var(--ease);
+}
+.personTile:hover {
+  border-color: var(--line-2);
+  box-shadow: var(--shadow-1);
+}
+.personTile:hover .personAv {
+  transform: scale(1.05);
+}
+.personAv {
+  transition: transform 0.3s var(--ease-spring);
 }
 .personAv {
   width: 44px;
@@ -264,6 +290,12 @@
 .featuredPost:hover {
   border-color: var(--line-2);
   box-shadow: var(--shadow-2);
+}
+.featuredPost:hover .coverMark {
+  transform: scale(1.03);
+}
+.coverMark {
+  transition: transform 0.5s var(--ease);
 }
 .featuredCopy {
   padding: clamp(28px, 4vw, 48px);
@@ -667,6 +699,14 @@
   display: grid;
   place-items: center;
   flex: none;
+  transition:
+    transform 0.3s var(--ease-spring),
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease);
+}
+.contactItem:hover .contactItemIcon {
+  transform: translateY(-2px);
+  border-color: var(--ink-3);
 }
 .contactForm {
   border: 1px solid var(--line);
@@ -699,6 +739,36 @@
   color: var(--ok);
   display: grid;
   place-items: center;
+  animation: popIn 0.5s var(--ease-spring) both;
+}
+.successRing svg {
+  animation: popIn 0.45s var(--ease-spring) 0.12s both;
+}
+@keyframes popIn {
+  from {
+    transform: scale(0.55);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Tiles settling in after a filter change */
+.tileIn {
+  animation: fadeUp 0.4s var(--ease-out) both;
+  animation-delay: var(--tile-delay, 0ms);
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ---------- CTA band (subpages) ---------- */
@@ -709,6 +779,14 @@
 .ctaBand .lead {
   margin: 18px auto 0;
   max-width: 560px;
+}
+
+/* Touch: keep color feedback, drop sticky lifts */
+@media (hover: none) {
+  .postCard:hover,
+  .tileCard:hover {
+    transform: none;
+  }
 }
 
 /* ---------- Responsive ---------- */

@@ -1,5 +1,9 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import m from "./mock.module.css";
 import { AreaChart, Sparkline } from "@/components/charts";
+import { useCountUp, useInView, usePrefersReducedMotion } from "@/components/hooks";
 import {
   IconGrid,
   IconAgent,
@@ -27,15 +31,79 @@ const kpis = [
   { label: "Approval rate", value: "96.2%", delta: "+1.9%", spark: [31, 28, 32, 35, 33, 36, 38] },
 ];
 
-const feed = [
+type FeedItem = { id: number; who: string; what: string; when: string };
+
+const feedPool: Omit<FeedItem, "id">[] = [
   { who: "Support Agent", what: "resolved ticket #5841 — billing question", when: "12:41" },
   { who: "Triage automation", what: "completed 42 tickets in 44s", when: "12:38" },
   { who: "Maya Chen", what: "approved 3 agent actions", when: "12:31" },
+  { who: "Research Agent", what: "delivered competitive brief to Growth", when: "12:29" },
+  { who: "Sales Agent", what: "enriched 26 contacts from call notes", when: "12:24" },
+  { who: "Data Agent", what: "flagged a null-rate spike in events", when: "12:18" },
+  { who: "Support Agent", what: "escalated refund request to Maya", when: "12:12" },
+  { who: "PR summary automation", what: "posted release notes to #eng-updates", when: "12:07" },
 ];
 
+function KpiValue({ value, start }: { value: string; start: boolean }) {
+  const text = useCountUp(value, start, 1400);
+  return <div className={m.kpiValue}>{text}</div>;
+}
+
 export default function ProductApp() {
+  const reduced = usePrefersReducedMotion();
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.25 });
+
+  // Live agent progress — drifts forward slowly, wraps like a fresh task.
+  const [progress, setProgress] = useState<Record<string, number>>(() =>
+    Object.fromEntries(agents.map((a) => [a.id, Math.max(a.progress, 8)]))
+  );
+
+  // Activity feed — new items glide in at the top every few seconds.
+  const [feed, setFeed] = useState<FeedItem[]>(() =>
+    feedPool.slice(0, 3).map((f, i) => ({ ...f, id: i }))
+  );
+  const nextId = useRef(3);
+  const poolIdx = useRef(3);
+
+  useEffect(() => {
+    if (reduced || !inView) return;
+
+    const progressTimer = window.setInterval(() => {
+      if (document.hidden) return;
+      setProgress((prev) => {
+        const next = { ...prev };
+        for (const a of agents) {
+          if (a.status !== "Working") continue;
+          const cur = next[a.id];
+          next[a.id] = cur >= 96 ? 30 + Math.round(Math.random() * 14) : cur + 1 + Math.round(Math.random() * 2);
+        }
+        return next;
+      });
+    }, 2600);
+
+    const feedTimer = window.setInterval(() => {
+      if (document.hidden) return;
+      setFeed((prev) => {
+        const item = feedPool[poolIdx.current % feedPool.length];
+        poolIdx.current += 1;
+        const now = new Date();
+        const when = `${String(now.getHours()).padStart(2, "0")}:${String(
+          now.getMinutes()
+        ).padStart(2, "0")}`;
+        const withId = { ...item, when, id: nextId.current };
+        nextId.current += 1;
+        return [withId, ...prev].slice(0, 3);
+      });
+    }, 6400);
+
+    return () => {
+      window.clearInterval(progressTimer);
+      window.clearInterval(feedTimer);
+    };
+  }, [reduced, inView]);
+
   return (
-    <div className={m.frame}>
+    <div className={m.frame} ref={ref}>
       <div className={m.frameChrome}>
         <div className={m.lights}>
           <span />
@@ -114,7 +182,7 @@ export default function ProductApp() {
                   <span className={m.kpiLabel}>{k.label}</span>
                   <span className={m.delta}>↑ {k.delta}</span>
                 </div>
-                <div className={m.kpiValue}>{k.value}</div>
+                <KpiValue value={k.value} start={inView} />
                 <div className={m.kpiSpark}>
                   <Sparkline data={k.spark} width={92} height={26} />
                 </div>
@@ -161,7 +229,7 @@ export default function ProductApp() {
                       <div className={m.agentTask}>{a.currentTask}</div>
                     </div>
                     <div className={m.progress}>
-                      <i style={{ width: `${Math.max(a.progress, 8)}%` }} />
+                      <i style={{ width: `${progress[a.id]}%` }} />
                     </div>
                   </div>
                 ))}
@@ -171,8 +239,8 @@ export default function ProductApp() {
 
           <div className={m.card}>
             <div className={m.cardBody} style={{ paddingTop: 14 }}>
-              {feed.map((f) => (
-                <div key={f.when} className={m.feedRow}>
+              {feed.map((f, i) => (
+                <div key={f.id} className={`${m.feedRow} ${i === 0 && !reduced ? m.feedRowNew : ""}`}>
                   <span className="dot dot-ok" style={{ alignSelf: "center" }} />
                   <span>
                     <b className={m.feedWho}>{f.who}</b>{" "}
