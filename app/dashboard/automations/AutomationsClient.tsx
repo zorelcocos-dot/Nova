@@ -143,7 +143,7 @@ export default function AutomationsClient() {
             <div style={{ color: "var(--ink-3)", display: "inline-flex", marginBottom: 12 }}>
               <IconWorkflow size={28} />
             </div>
-            <div style={{ fontSize: 15, fontWeight: 550 }}>No automations match</div>
+            <div style={{ fontSize: 15, fontWeight: 600 }}>No automations match</div>
             <p className="body-s" style={{ marginTop: 6 }}>
               Try a different search, or create a new one.
             </p>

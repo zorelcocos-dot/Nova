@@ -11,11 +11,14 @@ export default function Reveal({
   delay = 0,
   className = "",
   as: Tag = "div",
+  blur = false,
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
   as?: "div" | "section" | "span" | "figure" | "li";
+  /** Also sharpen into focus (subtle blur → clear). Use sparingly. */
+  blur?: boolean;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [inView, setInView] = useState(false);
@@ -46,7 +49,7 @@ export default function Reveal({
     <Tag
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ref={ref as any}
-      className={`reveal ${inView ? "in" : ""} ${className}`}
+      className={`reveal ${blur ? "reveal-sharp" : ""} ${inView ? "in" : ""} ${className}`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}

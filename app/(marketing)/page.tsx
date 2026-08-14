@@ -8,6 +8,7 @@ import AutomationRule from "@/components/mock/AutomationRule";
 import AgentCards from "@/components/mock/AgentCards";
 import ConsolePanel from "@/components/mock/ConsolePanel";
 import { AreaChart, Donut } from "@/components/charts";
+import CountUp from "@/components/CountUp";
 import {
   IconChevronRight,
   IconAgent,
@@ -39,12 +40,12 @@ export default function HomePage() {
           <div className={h.heroInner}>
             <Reveal>
               <Link href="/blog/introducing-nova-ai-2" className={h.heroLabel}>
-                <span className="dot dot-pulse" style={{ background: "var(--accent)" }} />
+                <span className={`dot ${h.heroDot}`} />
                 Introducing NOVA AI 2.0
                 <IconChevronRight size={14} />
               </Link>
             </Reveal>
-            <Reveal delay={70}>
+            <Reveal delay={70} blur>
               <h1 className={`h-display ${h.heroTitle}`}>
                 Your work, automated&nbsp;by&nbsp;AI.
               </h1>
@@ -89,14 +90,16 @@ export default function HomePage() {
             <p className={h.trustedLabel}>
               Trusted by operations teams at 4,000+ companies
             </p>
-            <div className={h.logoRow}>
-              {trustedCompanies.map((c) => (
-                <span key={c.name} className={`${h.logoWord} ${logoStyleKey[c.style]}`}>
+          </Reveal>
+          <div className={h.logoRow}>
+            {trustedCompanies.map((c, i) => (
+              <Reveal key={c.name} delay={120 + i * 45} as="span">
+                <span className={`${h.logoWord} ${logoStyleKey[c.style]}`}>
                   {c.name}
                 </span>
-              ))}
-            </div>
-          </Reveal>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -262,6 +265,8 @@ export default function HomePage() {
               <h2 className="h-1" style={{ marginTop: 16 }}>
                 Reliable enough to run the company on.
               </h2>
+            </Reveal>
+            <Reveal delay={90}>
               <p className="lead" style={{ marginTop: 18 }}>
                 Every run is observable, every action is logged, and every
                 decision is replayable — down to the millisecond.
@@ -316,6 +321,8 @@ export default function HomePage() {
               <h2 className="h-1" style={{ marginTop: 16 }}>
                 Logic you can see at a glance.
               </h2>
+            </Reveal>
+            <Reveal delay={90}>
               <p className="lead">
                 Branching, approvals, and handoffs — drawn on a canvas calm
                 enough to actually reason about.
@@ -356,6 +363,8 @@ export default function HomePage() {
               <h2 className="h-1" style={{ marginTop: 16 }}>
                 Plays well with everything you use.
               </h2>
+            </Reveal>
+            <Reveal delay={90}>
               <p className="lead">
                 NOVA reads and writes through 80+ native integrations, with
                 permissions inherited from the tools themselves.
@@ -408,15 +417,15 @@ export default function HomePage() {
               <div className={h.analyticsBody}>
                 <div className={h.analyticsKpis}>
                   <div className={h.aKpi}>
-                    <b>341</b>
+                    <b><CountUp value="341" /></b>
                     <span>Hours saved</span>
                   </div>
                   <div className={h.aKpi}>
-                    <b>3,621</b>
+                    <b><CountUp value="3,621" /></b>
                     <span>Tasks automated</span>
                   </div>
                   <div className={h.aKpi}>
-                    <b>96.2%</b>
+                    <b><CountUp value="96.2%" /></b>
                     <span>Approval rate</span>
                   </div>
                 </div>
@@ -452,15 +461,15 @@ export default function HomePage() {
             </p>
             <div className={h.statRows}>
               <div className={h.statRow}>
-                <span className={h.statBig}>41 hrs</span>
+                <span className={h.statBig}><CountUp value="41" /> hrs</span>
                 <span className={h.statDesc}>Average saved per seat, per month</span>
               </div>
               <div className={h.statRow}>
-                <span className={h.statBig}>98.2%</span>
+                <span className={h.statBig}><CountUp value="98.2%" /></span>
                 <span className={h.statDesc}>Tasks completed without intervention</span>
               </div>
               <div className={h.statRow}>
-                <span className={h.statBig}>4.1M</span>
+                <span className={h.statBig}><CountUp value="4.1M" /></span>
                 <span className={h.statDesc}>Tasks automated by NOVA teams each month</span>
               </div>
             </div>
@@ -471,7 +480,7 @@ export default function HomePage() {
       {/* 10 — Testimonials */}
       <section className="section">
         <div className="container">
-          <Reveal>
+          <Reveal blur>
             <div className={h.quoteHero}>
               <p className="eyebrow" style={{ marginBottom: 28 }}>What teams say</p>
               <blockquote className={h.bigQuote}>
@@ -535,6 +544,8 @@ export default function HomePage() {
               <h2 className="h-1" style={{ marginTop: 16 }}>
                 Starts free. Scales honestly.
               </h2>
+            </Reveal>
+            <Reveal delay={90}>
               <p className="lead">
                 Pay for outcomes, not seats you don&rsquo;t use. Every plan
                 ships with the full agent roster.
@@ -583,21 +594,10 @@ export default function HomePage() {
                 didn&rsquo;t realize it was losing.
               </p>
               <div className={h.ctaBtns}>
-                <Link
-                  href="/signup"
-                  className="btn btn-lg"
-                  style={{ background: "#f5f5f7", color: "#1d1d1f" }}
-                >
+                <Link href="/signup" className={`btn btn-lg ${h.ctaBtnLight}`}>
                   Start building free
                 </Link>
-                <Link
-                  href="/pricing"
-                  className="btn btn-lg"
-                  style={{
-                    border: "1px solid rgba(255,255,255,0.24)",
-                    color: "#f5f5f7",
-                  }}
-                >
+                <Link href="/pricing" className={`btn btn-lg ${h.ctaBtnGhost}`}>
                   Compare plans
                 </Link>
               </div>

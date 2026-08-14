@@ -1,7 +1,12 @@
+"use client";
+
 import styles from "./charts.module.css";
+import { useInView, usePrefersReducedMotion } from "./hooks";
 
 /* ============================================================
    Minimal, hand-rolled SVG charts. No dependencies.
+   Each chart draws itself in the first time it enters the
+   viewport; reduced-motion users see the final state at once.
    ============================================================ */
 
 function smoothPath(pts: { x: number; y: number }[]): string {
@@ -36,6 +41,11 @@ export function AreaChart({
   showGrid?: boolean;
   accent?: boolean;
 }) {
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.3 });
+  const reduced = usePrefersReducedMotion();
+  const animate = inView && !reduced; // draw when scrolled into view
+  const shown = inView || reduced; // reduced-motion: visible, no draw
+
   const W = 720;
   const H = height;
   const padX = 8;
@@ -50,63 +60,71 @@ export function AreaChart({
   const area = `${line} L ${pts[pts.length - 1].x},${H - padBottom} L ${pts[0].x},${H - padBottom} Z`;
   const gid = `ag${(gradId += 1)}`;
   const last = pts[pts.length - 1];
+  const stroke = accent ? "var(--accent)" : "var(--ink)";
 
   return (
-    <svg
-      viewBox={`0 0 ${W} ${H}`}
-      className={styles.chart}
-      role="img"
-      aria-label="Trend chart"
-    >
-      <defs>
-        <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-          <stop
-            offset="0%"
-            stopColor={accent ? "var(--accent)" : "var(--ink)"}
-            stopOpacity="0.14"
+    <div ref={ref}>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className={styles.chart}
+        role="img"
+        aria-label="Trend chart"
+      >
+        <defs>
+          <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={stroke} stopOpacity="0.14" />
+            <stop offset="100%" stopColor={stroke} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {showGrid &&
+          [0.25, 0.5, 0.75].map((t) => (
+            <line
+              key={t}
+              x1={padX}
+              x2={W - padX}
+              y1={padTop + t * (H - padTop - padBottom)}
+              y2={padTop + t * (H - padTop - padBottom)}
+              className={styles.grid}
+            />
+          ))}
+        <path
+          d={area}
+          fill={`url(#${gid})`}
+          className={animate ? styles.areaIn : shown ? "" : styles.wait}
+        />
+        <path
+          d={line}
+          fill="none"
+          stroke={stroke}
+          strokeWidth="2"
+          strokeLinecap="round"
+          className={animate ? styles.draw : shown ? "" : styles.waitLine}
+        />
+        <g className={animate ? styles.dotIn : shown ? "" : styles.wait}>
+          <circle cx={last.x} cy={last.y} r="3.5" fill={stroke} />
+          <circle
+            cx={last.x}
+            cy={last.y}
+            r="7"
+            fill="none"
+            stroke={stroke}
+            strokeOpacity="0.25"
           />
-          <stop
-            offset="100%"
-            stopColor={accent ? "var(--accent)" : "var(--ink)"}
-            stopOpacity="0"
-          />
-        </linearGradient>
-      </defs>
-      {showGrid &&
-        [0.25, 0.5, 0.75].map((t) => (
-          <line
-            key={t}
-            x1={padX}
-            x2={W - padX}
-            y1={padTop + t * (H - padTop - padBottom)}
-            y2={padTop + t * (H - padTop - padBottom)}
-            className={styles.grid}
-          />
-        ))}
-      <path d={area} fill={`url(#${gid})`} />
-      <path
-        d={line}
-        fill="none"
-        stroke={accent ? "var(--accent)" : "var(--ink)"}
-        strokeWidth="2"
-        strokeLinecap="round"
-        className={styles.draw}
-      />
-      <circle cx={last.x} cy={last.y} r="3.5" fill={accent ? "var(--accent)" : "var(--ink)"} />
-      <circle cx={last.x} cy={last.y} r="7" fill="none" stroke={accent ? "var(--accent)" : "var(--ink)"} strokeOpacity="0.25" />
-      {labels.length > 0 &&
-        labels.map((l, i) => (
-          <text
-            key={i}
-            x={padX + (i / (labels.length - 1)) * (W - padX * 2)}
-            y={H - 8}
-            textAnchor={i === 0 ? "start" : i === labels.length - 1 ? "end" : "middle"}
-            className={styles.label}
-          >
-            {l}
-          </text>
-        ))}
-    </svg>
+        </g>
+        {labels.length > 0 &&
+          labels.map((l, i) => (
+            <text
+              key={i}
+              x={padX + (i / (labels.length - 1)) * (W - padX * 2)}
+              y={H - 8}
+              textAnchor={i === 0 ? "start" : i === labels.length - 1 ? "end" : "middle"}
+              className={`${styles.label} ${animate ? styles.labelIn : shown ? "" : styles.wait}`}
+            >
+              {l}
+            </text>
+          ))}
+      </svg>
+    </div>
   );
 }
 
@@ -140,21 +158,38 @@ export function Sparkline({
 
 export function BarChart({
   data,
-  format = (v: number) => String(v),
+  comma = false,
 }: {
   data: { label: string; value: number }[];
-  format?: (v: number) => string;
+  /** Format values with thousands separators */
+  comma?: boolean;
 }) {
+  const format = (v: number) => (comma ? v.toLocaleString("en-US") : String(v));
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.3 });
+  const reduced = usePrefersReducedMotion();
+  const animate = inView && !reduced;
+  const shown = inView || reduced;
   const max = Math.max(...data.map((d) => d.value));
   return (
-    <div className={styles.bars} role="img" aria-label="Bar chart">
-      {data.map((d) => (
+    <div ref={ref} className={styles.bars} role="img" aria-label="Bar chart">
+      {data.map((d, i) => (
         <div key={d.label} className={styles.barRow}>
           <span className={styles.barLabel}>{d.label}</span>
           <div className={styles.barTrack}>
             <div
-              className={styles.barFill}
-              style={{ width: `${(d.value / max) * 100}%` }}
+              className={
+                animate
+                  ? styles.barFill
+                  : shown
+                    ? styles.barFillStatic
+                    : styles.barFillWait
+              }
+              style={
+                {
+                  width: `${(d.value / max) * 100}%`,
+                  "--bar-delay": `${i * 70}ms`,
+                } as React.CSSProperties
+              }
             />
           </div>
           <span className={styles.barValue}>{format(d.value)}</span>
@@ -175,6 +210,11 @@ export function Donut({
   centerLabel: string;
   centerValue: string;
 }) {
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.3 });
+  const reduced = usePrefersReducedMotion();
+  const ready = inView || reduced; // segments visible once in view
+  const sweep = inView && !reduced; // animated sweep only when motion is fine
+
   const total = data.reduce((s, d) => s + d.value, 0);
   const r = 34;
   const circ = 2 * Math.PI * r;
@@ -188,7 +228,7 @@ export function Donut({
   ];
   let offset = 0;
   return (
-    <div className={styles.donutWrap}>
+    <div ref={ref} className={styles.donutWrap}>
       <svg viewBox="0 0 84 84" width={size} height={size} role="img" aria-label="Distribution chart">
         <g transform="rotate(-90 42 42)">
           {data.map((d, i) => {
@@ -203,9 +243,13 @@ export function Donut({
                 fill="none"
                 stroke={grays[i % grays.length]}
                 strokeWidth="9"
-                strokeDasharray={`${dash - 1.5} ${circ - dash + 1.5}`}
-                strokeDashoffset={-offset}
+                strokeDasharray={
+                  ready ? `${dash - 1.5} ${circ - dash + 1.5}` : `0 ${circ}`
+                }
+                strokeDashoffset={ready ? -offset : 0}
                 strokeLinecap="butt"
+                className={styles.donutSeg}
+                style={{ transitionDelay: sweep ? `${i * 55}ms` : "0ms" }}
               />
             );
             offset += dash;

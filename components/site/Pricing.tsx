@@ -11,8 +11,12 @@ export default function Pricing() {
 
   return (
     <div>
-      {/* Billing toggle */}
-      <div className={styles.toggleRow}>
+      {/* Billing toggle — segmented control with a sliding thumb */}
+      <div className={styles.toggleRow} role="group" aria-label="Billing period">
+        <span
+          className={`${styles.toggleThumb} ${yearly ? styles.toggleThumbRight : ""}`}
+          aria-hidden
+        />
         <button
           className={`${styles.toggleOpt} ${!yearly ? styles.toggleActive : ""}`}
           onClick={() => setYearly(false)}
@@ -26,7 +30,11 @@ export default function Pricing() {
           aria-pressed={yearly}
         >
           Yearly
-          <span className={styles.saveChip}>Save 20%</span>
+          <span
+            className={`${styles.saveChip} ${yearly ? styles.saveChipOn : ""}`}
+          >
+            Save 20%
+          </span>
         </button>
       </div>
 
@@ -46,7 +54,12 @@ export default function Pricing() {
               <p className={styles.blurb}>{plan.blurb}</p>
 
               <div className={styles.priceRow}>
-                <span className={styles.price}>${price}</span>
+                <span
+                  key={`${plan.id}-${yearly}`}
+                  className={styles.price}
+                >
+                  ${price}
+                </span>
                 <span className={styles.per}>
                   {plan.monthly === 0
                     ? "free forever"

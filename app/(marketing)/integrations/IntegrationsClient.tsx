@@ -47,10 +47,14 @@ export default function IntegrationsClient() {
       </div>
 
       <div className={s.grid3} style={{ gap: 14 }}>
-        {visible.map((tool) => {
+        {visible.map((tool, i) => {
           const BrandIcon = brandIcons[tool.id];
           return (
-            <div key={tool.id} className={m.intTile}>
+            <div
+              key={`${cat}-${tool.id}`}
+              className={`${m.intTile} ${s.tileIn}`}
+              style={{ "--tile-delay": `${Math.min(i, 8) * 35}ms` } as React.CSSProperties}
+            >
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div className={m.intIcon}>
                   {BrandIcon ? <BrandIcon size={18} /> : <span style={{ fontSize: 13, fontWeight: 600 }}>{tool.name[0]}</span>}

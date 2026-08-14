@@ -3,16 +3,27 @@
   inset: 0 0 auto 0;
   z-index: 100;
   height: var(--nav-h);
-  border-bottom: 1px solid transparent;
-  transition:
-    border-color 0.3s var(--ease),
-    background-color 0.3s var(--ease);
 }
-.nav.scrolled {
-  border-bottom-color: var(--line);
+/* Glass underlay — crossfaded in on scroll (opacity is cheap;
+   backdrop-filter itself never animates, so it can't jank). */
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(251, 251, 253, 0.78);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  backdrop-filter: saturate(180%) blur(18px);
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+  pointer-events: none;
+}
+.nav.scrolled::before {
+  opacity: 1;
 }
 
 .inner {
+  position: relative;
   height: var(--nav-h);
   display: flex;
   align-items: center;
@@ -24,6 +35,17 @@
   align-items: center;
   gap: 8px;
   color: var(--ink);
+  border-radius: 8px;
+  transition: opacity 0.18s var(--ease);
+}
+.brand:hover {
+  opacity: 0.72;
+}
+.brand svg {
+  transition: transform 0.3s var(--ease-spring);
+}
+.brand:hover svg {
+  transform: rotate(-4deg) scale(1.04);
 }
 .wordmark {
   font-size: 15.5px;
@@ -82,14 +104,21 @@
   display: none;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   margin-right: -8px;
   border-radius: 10px;
   color: var(--ink);
+  transition: background-color 0.18s var(--ease);
 }
 .menuBtn:hover {
   background: var(--fill);
+}
+.menuBtn:active {
+  transform: scale(0.94);
+}
+.menuBtn svg {
+  transition: transform 0.2s var(--ease-spring);
 }
 
 /* ---------- Mobile menu ---------- */
@@ -98,7 +127,7 @@
   inset: 0;
   z-index: 99;
   background: var(--bg);
-  padding: calc(var(--nav-h) + 32px) 24px 40px;
+  padding: calc(var(--nav-h) + 24px) 24px 40px;
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -126,13 +155,17 @@
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.2;
-  padding: 14px 0;
+  padding: 15px 0;
   border-bottom: 1px solid var(--line);
   opacity: 0;
   transform: translateY(10px);
   transition:
     opacity 0.4s var(--ease-out),
-    transform 0.4s var(--ease-out);
+    transform 0.4s var(--ease-out),
+    color 0.15s var(--ease);
+}
+.mobileLink:active {
+  color: var(--ink-3);
 }
 .mobileOpen .mobileLink {
   opacity: 1;

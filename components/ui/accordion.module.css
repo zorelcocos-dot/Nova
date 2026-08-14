@@ -16,14 +16,23 @@
   padding: 21px 4px;
   text-align: left;
   font-size: 16.5px;
-  font-weight: 550;
   font-weight: 500;
   letter-spacing: -0.015em;
   color: var(--ink);
   transition: color 0.2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
 .trigger:hover {
   color: var(--ink-2);
+}
+.trigger:active .qtext {
+  opacity: 0.7;
+}
+.qtext {
+  transition: opacity 0.15s var(--ease), transform 0.25s var(--ease);
+}
+.trigger:hover .qtext {
+  transform: translateX(2px);
 }
 .iconWrap {
   flex: none;
@@ -35,20 +44,28 @@
   place-items: center;
   color: var(--ink-2);
   transition:
-    transform 0.35s var(--ease),
-    background-color 0.25s var(--ease),
-    border-color 0.25s var(--ease);
+    transform 0.4s var(--ease-spring),
+    background-color 0.28s var(--ease),
+    border-color 0.28s var(--ease),
+    color 0.28s var(--ease);
+}
+.trigger:hover .iconWrap {
+  border-color: var(--ink-3);
 }
 .open .iconWrap {
-  transform: rotate(45deg);
+  transform: rotate(135deg);
   background: var(--ink);
   border-color: var(--ink);
   color: var(--bg);
 }
+/* Height animation via grid rows — smooth auto-height without JS measuring */
 .panel {
   display: grid;
-  overflow: hidden;
-  transition: grid-template-rows 0.4s var(--ease);
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s var(--ease-out);
+}
+.open .panel {
+  grid-template-rows: 1fr;
 }
 .panelInner {
   overflow: hidden;
@@ -60,9 +77,29 @@
   color: var(--ink-2);
   letter-spacing: -0.008em;
   max-width: 640px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+.open .answer {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.4s var(--ease) 0.1s,
+    transform 0.4s var(--ease) 0.1s;
 }
 @media (max-width: 640px) {
   .answer {
     padding-right: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .answer,
+  .iconWrap,
+  .qtext {
+    transition: none;
   }
 }

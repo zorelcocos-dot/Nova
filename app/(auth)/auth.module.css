@@ -112,7 +112,6 @@
 }
 .paneQuote {
   font-size: clamp(19px, 1.6vw, 23px);
-  font-weight: 550;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: -0.024em;
@@ -134,6 +133,11 @@
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 16px;
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.paneStat:hover {
+  border-color: var(--line-2);
+  box-shadow: var(--shadow-1);
 }
 .paneStat b {
   display: block;

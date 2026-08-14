@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import m from "./mock.module.css";
+import { useInView, usePrefersReducedMotion } from "@/components/hooks";
 import {
   IconInbox,
   IconFilter,
@@ -35,8 +39,18 @@ const steps = [
 ];
 
 export default function AutomationRule() {
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.3 });
+  const reduced = usePrefersReducedMotion();
+  const play = inView && !reduced;
+  const [stepsIn, setStepsIn] = useState(false);
+  useEffect(() => {
+    if (!play) return;
+    const raf = requestAnimationFrame(() => setStepsIn(true));
+    return () => cancelAnimationFrame(raf);
+  }, [play]);
+
   return (
-    <div className={m.rule}>
+    <div ref={ref} className={`${m.rule} ${play ? m.rulePlay : ""}`}>
       <div className={m.ruleHead}>
         <div className={m.ruleName}>Triage inbound tickets</div>
         <span className="chip">
@@ -46,7 +60,11 @@ export default function AutomationRule() {
 
       <div className={m.ruleSteps}>
         {steps.map((s, i) => (
-          <div key={s.kind} className={m.step}>
+          <div
+            key={s.kind}
+            className={`${m.step} ${stepsIn ? m.stepIn : ""}`}
+            style={play ? { transitionDelay: `${160 + i * 220}ms` } : undefined}
+          >
             <div className={m.stepRail}>
               <div className={m.stepDot}>
                 <s.icon size={11} />

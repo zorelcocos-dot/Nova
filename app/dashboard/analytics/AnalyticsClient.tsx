@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AreaChart, Donut, BarChart, Sparkline } from "@/components/charts";
+import CountUp from "@/components/CountUp";
 import { IconClock, IconBolt, IconCheck, IconAgent } from "@/components/icons";
 import { chartRanges, donutData, tasksByType } from "@/lib/data";
 import d from "../dash.module.css";
@@ -53,7 +54,10 @@ export default function AnalyticsClient() {
               <st.icon size={14} />
               {st.label}
             </div>
-            <div className={d.statValue}>{st.value}</div>
+            <div className={d.statValue}>
+              {/* re-keyed on range so the number glides to the new total */}
+              <CountUp key={`${st.label}-${range}`} value={st.value} duration={800} />
+            </div>
             <div className={d.statFoot}>
               <span className={d.statDelta}>↑ {st.delta} vs prior</span>
               <span style={{ color: "var(--ink-3)" }}>
@@ -112,7 +116,7 @@ export default function AnalyticsClient() {
             </div>
           </div>
           <div className={m.cardBody} style={{ paddingTop: 16 }}>
-            <BarChart data={tasksByType} format={(v) => v.toLocaleString()} />
+            <BarChart data={tasksByType} comma />
           </div>
         </div>
 

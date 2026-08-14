@@ -77,7 +77,14 @@ export default function ContactForm() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
         <span className="caption">We reply within one business day.</span>
         <button type="submit" className="btn btn-primary" disabled={sending} style={{ minWidth: 140 }}>
-          {sending ? "Sending…" : "Send message"}
+          {sending ? (
+            <>
+              <span className="spinner" aria-hidden />
+              Sending…
+            </>
+          ) : (
+            "Send message"
+          )}
         </button>
       </div>
     </form>

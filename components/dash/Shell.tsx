@@ -149,6 +149,8 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       {/* Main */}
       <div className={d.body}>
         <header className={d.topbar}>
+          {/* Hairline progress on every route change — re-keyed by path */}
+          <span key={pathname} className={d.routeProgress} aria-hidden />
           <button
             className={d.menuToggle}
             onClick={() => setDrawer(true)}
