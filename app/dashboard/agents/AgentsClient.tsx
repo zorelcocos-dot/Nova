@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useToast } from "@/components/ui/Toast";
 import { Sparkline } from "@/components/charts";
 import { IconAgent, IconPlus, IconCheck } from "@/components/icons";
 import { agents } from "@/lib/data";
@@ -16,12 +17,8 @@ const sparks: Record<string, number[]> = {
 
 export default function AgentsClient() {
   const [paused, setPaused] = useState<Record<string, boolean>>({});
-  const [toast, setToast] = useState<string | null>(null);
 
-  function notice(msg: string) {
-    setToast(msg);
-    setTimeout(() => setToast(null), 2400);
-  }
+  const { toast: notice } = useToast();
 
   return (
     <>
@@ -151,12 +148,6 @@ export default function AgentsClient() {
         </div>
       </div>
 
-      {toast && (
-        <div className={d.toast} role="status">
-          <IconCheck size={14} />
-          {toast}
-        </div>
-      )}
     </>
   );
 }

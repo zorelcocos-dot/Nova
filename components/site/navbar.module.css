@@ -10,7 +10,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(251, 251, 253, 0.78);
+  background: var(--glass-bg);
   -webkit-backdrop-filter: saturate(180%) blur(18px);
   backdrop-filter: saturate(180%) blur(18px);
   border-bottom: 1px solid var(--line);
@@ -171,8 +171,23 @@
   opacity: 1;
   transform: none;
 }
-.mobileActions {
+.mobileThemeRow {
   margin-top: auto;
+  padding: 22px 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.mobileThemeLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-2);
+  letter-spacing: -0.01em;
+}
+.mobileActions {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;

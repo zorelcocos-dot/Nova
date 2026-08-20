@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useToast } from "@/components/ui/Toast";
 import {
   IconCheck,
   IconCopy,
@@ -8,9 +9,11 @@ import {
   IconShield,
   IconCard,
 } from "@/components/icons";
+import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from "@/components/ThemeProvider";
 import d from "../dash.module.css";
 
-const tabs = ["Workspace", "Notifications", "Security", "API keys", "Billing"] as const;
+const tabs = ["Workspace", "Appearance", "Notifications", "Security", "API keys", "Billing"] as const;
 type Tab = (typeof tabs)[number];
 
 function Toggle({
@@ -35,7 +38,6 @@ function Toggle({
 
 export default function SettingsClient() {
   const [tab, setTab] = useState<Tab>("Workspace");
-  const [toast, setToast] = useState<string | null>(null);
   const [notif, setNotif] = useState<Record<string, boolean>>({
     digest: true,
     approvals: true,
@@ -48,10 +50,8 @@ export default function SettingsClient() {
   ]);
   const [copied, setCopied] = useState<string | null>(null);
 
-  function notice(msg: string) {
-    setToast(msg);
-    setTimeout(() => setToast(null), 2400);
-  }
+  const { toast: notice } = useToast();
+  const { prefs, setPref } = useTheme();
 
   function copy(key: string) {
     navigator.clipboard?.writeText(key).catch(() => {});
@@ -119,7 +119,7 @@ export default function SettingsClient() {
                 </div>
               </div>
 
-              <div className={d.settingsPanel} style={{ borderColor: "rgba(196, 43, 43, 0.25)" }}>
+              <div className={d.settingsPanel} style={{ borderColor: "var(--danger-soft)" }}>
                 <div>
                   <div className={d.setTitle}>Danger zone</div>
                   <div className={d.setDesc}>
@@ -130,14 +130,65 @@ export default function SettingsClient() {
                 <div>
                   <button
                     className="btn btn-sm"
-                    style={{ border: "1px solid rgba(196,43,43,.4)", color: "#c42b2b" }}
-                    onClick={() => notice("Workspace deletion requires email confirmation.")}
+                    style={{
+                      border: "1px solid var(--danger)",
+                      color: "var(--danger)",
+                    }}
+                    onClick={() => notice("Workspace deletion requires email confirmation.", "danger")}
                   >
                     Delete workspace…
                   </button>
                 </div>
               </div>
             </>
+          )}
+
+          {tab === "Appearance" && (
+            <div className={d.settingsPanel}>
+              <div>
+                <div className={d.setTitle}>Color theme</div>
+                <div className={d.setDesc}>
+                  Applies to the whole workspace on this device. System
+                  follows your operating system automatically.
+                </div>
+              </div>
+              <ThemeToggle />
+              <div className={d.setRow}>
+                <div>
+                  <div className={d.setTitle}>Reduce motion</div>
+                  <div className={d.setDesc}>
+                    NOVA already respects your system setting. Turn this on to
+                    force still interfaces regardless of the OS.
+                  </div>
+                </div>
+                <Toggle
+                  on={prefs.reduceMotion}
+                  label="Reduce motion"
+                  onClick={() => {
+                    const next = !prefs.reduceMotion;
+                    setPref("reduceMotion", next);
+                    notice(next ? "Motion reduced." : "Motion restored.");
+                  }}
+                />
+              </div>
+              <div className={d.setRow}>
+                <div>
+                  <div className={d.setTitle}>Compact density</div>
+                  <div className={d.setDesc}>
+                    Tightens row height in tables and lists for dense views.
+                  </div>
+                </div>
+                <Toggle
+                  on={prefs.compactDensity}
+                  label="Compact density"
+                  onClick={() => {
+                    const next = !prefs.compactDensity;
+                    setPref("compactDensity", next);
+                    notice(next ? "Compact density on." : "Comfortable density on.");
+                  }}
+                />
+              </div>
+            </div>
           )}
 
           {tab === "Notifications" && (
@@ -208,7 +259,7 @@ export default function SettingsClient() {
                   </div>
                   <div className={d.setDesc}>Last active 3 hours ago</div>
                 </div>
-                <button className="btn btn-ghost btn-sm" onClick={() => notice("Session revoked.")}>
+                <button className="btn btn-ghost btn-sm" onClick={() => notice("Session revoked.", "danger")}>
                   Revoke
                 </button>
               </div>
@@ -240,7 +291,7 @@ export default function SettingsClient() {
                       className="btn btn-ghost btn-sm"
                       onClick={() => {
                         setKeys((ks) => ks.filter((x) => x !== k));
-                        notice("Key revoked.");
+                        notice("Key revoked.", "danger");
                       }}
                     >
                       Revoke
@@ -330,12 +381,6 @@ export default function SettingsClient() {
         </div>
       </div>
 
-      {toast && (
-        <div className={d.toast} role="status">
-          <IconCheck size={14} />
-          {toast}
-        </div>
-      )}
     </>
   );
 }

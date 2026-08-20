@@ -1,4 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import ThemeProvider, { themeScript } from "@/components/ThemeProvider";
+import ToastProvider from "@/components/ui/Toast";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -32,14 +34,24 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fbfbfd" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+  colorScheme: "light dark",
+};
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Paint the stored theme before first paint — no flash. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link
           rel="preload"
           href="/fonts/geist-latin-400-normal.woff2"
@@ -55,7 +67,11 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

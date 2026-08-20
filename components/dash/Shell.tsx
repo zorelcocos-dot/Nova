@@ -16,6 +16,7 @@ import {
   IconMenu,
   IconLogout,
 } from "@/components/icons";
+import ThemeToggle from "@/components/ThemeToggle";
 import { agents } from "@/lib/data";
 import d from "@/app/dashboard/dash.module.css";
 
@@ -169,6 +170,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             <span>Search or ask…</span>
             <span className="kbd">⌘K</span>
           </button>
+          <ThemeToggle compact />
           <button className={d.topIconBtn} aria-label="Notifications">
             <IconBell size={17} />
             <span className={d.dotp} />

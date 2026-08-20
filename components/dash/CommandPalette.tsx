@@ -13,28 +13,44 @@ import {
   IconLogout,
   IconSearch,
   IconArrowRight,
+  IconSun,
+  IconMoon,
+  IconDisplay,
 } from "@/components/icons";
+import { useTheme } from "@/components/ThemeProvider";
+import { useFocusTrap } from "@/components/hooks";
 import d from "@/app/dashboard/dash.module.css";
+
+/** Everything an action is allowed to touch. */
+export type PaletteContext = {
+  router: ReturnType<typeof useRouter>;
+  setTheme: (t: "light" | "dark" | "system") => void;
+};
 
 export type PaletteAction = {
   id: string;
   label: string;
   group: string;
   hint?: string;
+  /** Extra words that should match this action in search. */
+  keywords?: string;
   icon: (p: { size?: number }) => React.ReactElement;
-  run: (router: ReturnType<typeof useRouter>) => void;
+  run: (ctx: PaletteContext) => void;
 };
 
 export const paletteActions: PaletteAction[] = [
-  { id: "overview", label: "Go to Overview", group: "Navigate", hint: "G O", icon: IconGrid, run: (r) => r.push("/dashboard") },
-  { id: "agents", label: "Go to Agents", group: "Navigate", hint: "G A", icon: IconAgent, run: (r) => r.push("/dashboard/agents") },
-  { id: "automations", label: "Go to Automations", group: "Navigate", hint: "G W", icon: IconWorkflow, run: (r) => r.push("/dashboard/automations") },
-  { id: "analytics", label: "Go to Analytics", group: "Navigate", hint: "G N", icon: IconChart, run: (r) => r.push("/dashboard/analytics") },
-  { id: "settings", label: "Go to Settings", group: "Navigate", hint: "G S", icon: IconGear, run: (r) => r.push("/dashboard/settings") },
-  { id: "new-agent", label: "Deploy a new agent", group: "Create", icon: IconPlus, run: (r) => r.push("/dashboard/agents") },
-  { id: "new-automation", label: "Create an automation", group: "Create", icon: IconPlus, run: (r) => r.push("/dashboard/automations") },
-  { id: "docs", label: "Open documentation", group: "Help", icon: IconBook, run: (r) => r.push("/docs") },
-  { id: "logout", label: "Log out", group: "Account", hint: "⇧ ⌘ Q", icon: IconLogout, run: (r) => r.push("/login") },
+  { id: "overview", label: "Go to Overview", group: "Navigate", hint: "G O", keywords: "home dashboard stats", icon: IconGrid, run: ({ router }) => router.push("/dashboard") },
+  { id: "agents", label: "Go to Agents", group: "Navigate", hint: "G A", keywords: "research sales support data", icon: IconAgent, run: ({ router }) => router.push("/dashboard/agents") },
+  { id: "automations", label: "Go to Automations", group: "Navigate", hint: "G W", keywords: "workflows rules triggers", icon: IconWorkflow, run: ({ router }) => router.push("/dashboard/automations") },
+  { id: "analytics", label: "Go to Analytics", group: "Navigate", hint: "G N", keywords: "charts reports hours saved", icon: IconChart, run: ({ router }) => router.push("/dashboard/analytics") },
+  { id: "settings", label: "Go to Settings", group: "Navigate", hint: "G S", keywords: "workspace billing api keys", icon: IconGear, run: ({ router }) => router.push("/dashboard/settings") },
+  { id: "new-agent", label: "Deploy a new agent", group: "Create", keywords: "add hire", icon: IconPlus, run: ({ router }) => router.push("/dashboard/agents") },
+  { id: "new-automation", label: "Create an automation", group: "Create", keywords: "add workflow rule", icon: IconPlus, run: ({ router }) => router.push("/dashboard/automations") },
+  { id: "theme-light", label: "Switch to light theme", group: "Appearance", keywords: "colour mode bright day", icon: IconSun, run: ({ setTheme }) => setTheme("light") },
+  { id: "theme-dark", label: "Switch to dark theme", group: "Appearance", keywords: "colour mode night", icon: IconMoon, run: ({ setTheme }) => setTheme("dark") },
+  { id: "theme-system", label: "Match system theme", group: "Appearance", keywords: "colour mode auto os", icon: IconDisplay, run: ({ setTheme }) => setTheme("system") },
+  { id: "docs", label: "Open documentation", group: "Help", keywords: "guide reference api help", icon: IconBook, run: ({ router }) => router.push("/docs") },
+  { id: "logout", label: "Log out", group: "Account", hint: "⇧ ⌘ Q", keywords: "sign out exit", icon: IconLogout, run: ({ router }) => router.push("/login") },
 ];
 
 export default function CommandPalette({
@@ -45,16 +61,20 @@ export default function CommandPalette({
   onClose: () => void;
 }) {
   const router = useRouter();
+  const { setTheme } = useTheme();
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useFocusTrap<HTMLDivElement>(open, onClose);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const list = q
-      ? paletteActions.filter((a) => a.label.toLowerCase().includes(q))
-      : paletteActions;
-    return list;
+    if (!q) return paletteActions;
+    // Match the visible label first, then the hidden keyword aliases,
+    // so "night" finds "Switch to dark theme".
+    return paletteActions.filter((a) =>
+      `${a.label} ${a.keywords ?? ""}`.toLowerCase().includes(q)
+    );
   }, [query]);
 
   useEffect(() => {
@@ -72,11 +92,11 @@ export default function CommandPalette({
 
   function runAction(a: PaletteAction) {
     onClose();
-    a.run(router);
+    a.run({ router, setTheme });
   }
 
   function onKeyDown(e: React.KeyboardEvent) {
-    if (e.key === "Escape") onClose();
+    // Escape is handled by the focus trap.
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setActive((i) => Math.min(i + 1, results.length - 1));
@@ -95,6 +115,7 @@ export default function CommandPalette({
   return (
     <div className={d.palOverlay} onClick={onClose} role="presentation">
       <div
+        ref={dialogRef}
         className={d.pal}
         role="dialog"
         aria-label="Command palette"

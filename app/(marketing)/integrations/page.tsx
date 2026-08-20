@@ -39,11 +39,11 @@ export default function IntegrationsPage() {
           <Reveal>
             <div className={s.apiPanel}>
               <div>
-                <p className="eyebrow" style={{ color: "#a1a1a6" }}>For builders</p>
+                <p className="eyebrow" style={{ color: "var(--inv-ink-2)" }}>For builders</p>
                 <h2 className="h-2" style={{ marginTop: 14 }}>
                   One API for the work itself.
                 </h2>
-                <p style={{ color: "#a1a1a6", fontSize: 15, lineHeight: 1.65, marginTop: 14 }}>
+                <p style={{ color: "var(--inv-ink-2)", fontSize: 15, lineHeight: 1.65, marginTop: 14 }}>
                   Create tasks, trigger workflows, and pull analytics from a
                   single, boringly-consistent REST API. Every event your
                   agents see is available to you — same envelopes, same

@@ -39,9 +39,34 @@ npm start          # serve the production build
 | `/dashboard/agents` | Agent control cards with pause/resume + action log |
 | `/dashboard/automations` | Searchable, filterable, toggleable automation table |
 | `/dashboard/analytics` | 7d/30d/90d switching, donut, per-agent performance |
-| `/dashboard/settings` | Workspace, notifications, security, API keys, billing |
+| `/dashboard/settings` | Workspace, appearance, notifications, security, API keys, billing |
 
 Press **⌘K / Ctrl-K** anywhere in the dashboard for the command palette.
+
+## Theming
+
+Light, dark, and system themes ship site-wide.
+
+- **How it works** — the resolved theme is a `data-theme` attribute on
+  `<html>`. Light values live on `:root` in `app/globals.css`; every dark
+  value lives in the single `[data-theme="dark"], .dark` block. An inline
+  script in `app/layout.tsx` paints the stored choice before first paint,
+  so there is no flash.
+- **Where users switch it** — marketing navbar, dashboard topbar,
+  Settings → Appearance, and the command palette ("dark", "light", "auto").
+  The choice persists in `localStorage` under `nova-theme`.
+- **Locally-inverted sections** — a section with class `.dark` (like the
+  home page engine band) stays dark in light mode and softens to
+  `--bg-soft` in dark mode instead of double-inverting.
+- **Panels that must stay dark in both themes** use the `--inv-*` token
+  family, so the mock product console keeps its identity either way.
+- **Display preferences** — Settings → Appearance also carries *Reduce
+  motion* and *Compact density*. They set `data-motion="reduce"` and
+  `data-density="compact"` on `<html>`, persist under `nova-prefs`, and are
+  honored by both CSS and the JS animation hooks.
+
+Colors are fully tokenized: no component hard-codes a hex value, so
+restyling means editing tokens, not hunting through CSS modules.
 
 ## Customization
 
@@ -58,7 +83,12 @@ Everything brandable lives in a few obvious places:
   (blog articles as structured blocks).
 - **Components** — `components/` is split by concern: `site/` (navbar,
   footer, pricing), `mock/` (the rendered product UI), `charts/`,
-  `dash/` (shell + command palette), `ui/` (accordion), `icons.tsx`.
+  `dash/` (shell + command palette), `ui/` (accordion, toast), `icons.tsx`.
+- **Toasts** — `useToast()` from `components/ui/Toast.tsx`, mounted once in
+  the root layout. `toast("Saved.")` or `toast("Key revoked.", "danger")`;
+  the queue announces politely to screen readers and cleans up its timers.
+- **Overlays** — `useFocusTrap()` in `components/hooks.ts` handles Tab
+  cycling, Escape, and focus restoration for modals and the mobile menu.
 - **Layout constants** — nav height, gutter, and container widths are CSS
   variables; breakpoints: 1024 / 920 / 832 / 768 / 620 / 560 / 480.
 
