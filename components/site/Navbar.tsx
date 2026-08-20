@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LogoMark, IconMenu, IconX } from "@/components/icons";
+import { useFocusTrap } from "@/components/hooks";
+import ThemeToggle from "@/components/ThemeToggle";
 import styles from "./navbar.module.css";
 
 const links = [
@@ -17,6 +19,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const mobileRef = useFocusTrap<HTMLDivElement>(open, () => setOpen(false));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -61,6 +64,7 @@ export default function Navbar() {
           </nav>
 
           <div className={styles.actions}>
+            <ThemeToggle compact />
             <Link href="/login" className={styles.login}>
               Log in
             </Link>
@@ -74,6 +78,7 @@ export default function Navbar() {
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
+            aria-controls="mobile-menu"
           >
             {open ? <IconX size={22} /> : <IconMenu size={22} />}
           </button>
@@ -82,8 +87,10 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
+        ref={mobileRef}
+        id="mobile-menu"
         className={`${styles.mobile} ${open ? styles.mobileOpen : ""}`}
-        aria-hidden={!open}
+        inert={!open}
       >
         <nav className={styles.mobileLinks} aria-label="Mobile">
           {links.map((l, i) => (
@@ -97,6 +104,10 @@ export default function Navbar() {
             </Link>
           ))}
         </nav>
+        <div className={styles.mobileThemeRow}>
+          <span className={styles.mobileThemeLabel}>Appearance</span>
+          <ThemeToggle />
+        </div>
         <div className={styles.mobileActions}>
           <Link href="/login" className="btn btn-secondary btn-block">
             Log in

@@ -2,16 +2,36 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/** True when the user prefers reduced motion. SSR-safe. */
+/**
+ * True when motion should be suppressed: either the OS asks for it, or the
+ * user forced it in Settings (which sets data-motion="reduce" on <html>).
+ * SSR-safe.
+ */
 export function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
+
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    const root = document.documentElement;
+    const compute = () =>
+      setReduced(mq.matches || root.dataset.motion === "reduce");
+
+    compute();
+    mq.addEventListener("change", compute);
+
+    // The in-app toggle flips an attribute, which no media query reports.
+    const observer = new MutationObserver(compute);
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-motion"],
+    });
+
+    return () => {
+      mq.removeEventListener("change", compute);
+      observer.disconnect();
+    };
   }, []);
+
   return reduced;
 }
 
@@ -111,4 +131,77 @@ export function useCountUp(target: string, start: boolean, duration = 1300): str
   }, [start, target, reduced]);
 
   return start ? (display ?? target) : target;
+}
+
+const FOCUSABLE = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
+
+/**
+ * Trap keyboard focus inside an overlay while `active`.
+ *
+ * Handles the three things every modal needs and most forget:
+ * Tab/Shift+Tab cycle within the container, Escape closes it, and focus
+ * returns to whatever was focused before it opened.
+ */
+export function useFocusTrap<T extends HTMLElement>(
+  active: boolean,
+  onEscape?: () => void
+): React.RefObject<T | null> {
+  const ref = useRef<T | null>(null);
+  const escapeRef = useRef(onEscape);
+  escapeRef.current = onEscape;
+
+  useEffect(() => {
+    if (!active) return;
+    const node = ref.current;
+    if (!node) return;
+
+    const previous = document.activeElement as HTMLElement | null;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        escapeRef.current?.();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const items = Array.from(
+        node.querySelectorAll<HTMLElement>(FOCUSABLE)
+      ).filter((el) => el.offsetParent !== null || el === document.activeElement);
+      if (items.length === 0) {
+        e.preventDefault();
+        return;
+      }
+      const first = items[0];
+      const last = items[items.length - 1];
+      const current = document.activeElement as HTMLElement | null;
+
+      // Wrap at both ends, and pull stray focus back inside.
+      if (e.shiftKey && (current === first || !node.contains(current))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (current === last || !node.contains(current))) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown, true);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown, true);
+      // Only restore if focus is still inside the (closing) overlay.
+      if (previous && node.contains(document.activeElement)) {
+        previous.focus();
+      }
+    };
+  }, [active]);
+
+  return ref;
 }

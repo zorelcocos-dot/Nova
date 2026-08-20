@@ -436,7 +436,7 @@
   background: var(--ink);
 }
 .codeBlock {
-  background: #161617;
+  background: var(--inv-bg);
   color: #e8e8ea;
   border-radius: 14px;
   padding: 18px 20px;
@@ -646,8 +646,8 @@
   color: var(--bg);
 }
 .apiPanel {
-  background: #161617;
-  color: #f5f5f7;
+  background: var(--inv-bg);
+  color: var(--inv-ink);
   border-radius: var(--r-xl);
   padding: clamp(32px, 5vw, 56px);
   display: grid;
@@ -657,24 +657,24 @@
   box-shadow: var(--shadow-3);
 }
 .apiCode {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--inv-fill);
+  border: 1px solid var(--inv-line);
   border-radius: 14px;
   padding: 16px 18px;
   font-family: var(--font-mono);
   font-size: 12.2px;
   line-height: 1.75;
   overflow-x: auto;
-  color: #b9b9bf;
+  color: var(--inv-code);
   white-space: pre;
   tab-size: 2;
 }
 .apiCode b {
-  color: #f5f5f7;
+  color: var(--inv-ink);
   font-weight: 500;
 }
 .apiCode .cm {
-  color: #6e6e76;
+  color: var(--inv-comment);
 }
 
 /* ---------- Contact ---------- */

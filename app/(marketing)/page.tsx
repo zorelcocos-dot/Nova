@@ -261,7 +261,7 @@ export default function HomePage() {
         <div className="container">
           <div className="section-header center" style={{ marginBottom: 56 }}>
             <Reveal>
-              <p className="eyebrow" style={{ color: "#86868b" }}>The engine</p>
+              <p className="eyebrow" style={{ color: "var(--ink-3)" }}>The engine</p>
               <h2 className="h-1" style={{ marginTop: 16 }}>
                 Reliable enough to run the company on.
               </h2>

@@ -46,10 +46,10 @@ export default function ConsolePanel() {
           style={{
             marginLeft: "auto",
             background: "rgba(95,201,142,0.14)",
-            color: "#5fc98e",
+            color: "var(--inv-ok)",
           }}
         >
-          <span className="dot" style={{ background: "#5fc98e" }} />
+          <span className="dot" style={{ background: "var(--inv-ok)" }} />
           Live
         </span>
       </div>

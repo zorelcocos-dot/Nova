@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useToast } from "@/components/ui/Toast";
 import {
   IconPlus,
   IconSearch,
-  IconCheck,
   IconWorkflow,
 } from "@/components/icons";
 import { automations as seed, type Automation } from "@/lib/data";
@@ -17,12 +17,8 @@ export default function AutomationsClient() {
   const [items, setItems] = useState<Automation[]>(seed);
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
-  const [toast, setToast] = useState<string | null>(null);
 
-  function notice(msg: string) {
-    setToast(msg);
-    setTimeout(() => setToast(null), 2400);
-  }
+  const { toast: notice } = useToast();
 
   const counts = useMemo(
     () => ({
@@ -193,12 +189,6 @@ export default function AutomationsClient() {
         )}
       </div>
 
-      {toast && (
-        <div className={d.toast} role="status">
-          <IconCheck size={14} />
-          {toast}
-        </div>
-      )}
     </>
   );
 }

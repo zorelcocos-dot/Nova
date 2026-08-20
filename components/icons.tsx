@@ -300,6 +300,33 @@ export const IconMail = (p: IconProps) => (
   </svg>
 );
 
+export const IconSun = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="4.2" />
+    <path d="M12 2.6v2.2M12 19.2v2.2M4.4 4.4l1.6 1.6M18 18l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.4 19.6 6 18M18 6l1.6-1.6" />
+  </svg>
+);
+
+export const IconMoon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z" />
+  </svg>
+);
+
+export const IconDisplay = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="3" y="4.5" width="18" height="12" rx="2.2" />
+    <path d="M9 20h6M12 16.5V20" />
+  </svg>
+);
+
+export const IconAlert = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="8.6" />
+    <path d="M12 7.8v4.6M12 15.9v.1" />
+  </svg>
+);
+
 /* NOVA logo mark — an N cut from a rounded square */
 export const LogoMark = ({ size = 22, className = "" }: { size?: number; className?: string }) => (
   <svg

@@ -48,8 +48,14 @@
   font-display: swap;
 }
 
-/* ---------- Tokens ---------- */
+/* ---------- Tokens ----------
+   Light values live on :root. Dark values live in ONE place
+   (the [data-theme="dark"], .dark group below) and are used for
+   both the global dark theme and locally-inverted sections.
+   Nothing outside this file should hardcode a color. */
 :root {
+  color-scheme: light;
+
   /* Type */
   --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -82,6 +88,41 @@
   --ok-soft: rgba(47, 157, 102, 0.12);
   --warn: #bf7b12;
   --warn-soft: rgba(191, 123, 18, 0.12);
+  --danger: #c8402f;
+  --danger-soft: rgba(200, 64, 47, 0.12);
+
+  /* Component-level semantics — always resolve, never hardcode */
+  --surface-2: #fafafc;          /* nested panels, table heads */
+  --surface-raised: #ffffff;     /* popovers, palette, toasts */
+  --scrim: rgba(20, 20, 22, 0.32);
+  --glass-bg: rgba(251, 251, 253, 0.78);
+  --glass-raised: rgba(255, 255, 255, 0.85);
+  --knob: #ffffff;
+  --shimmer: rgba(255, 255, 255, 0.55);
+  --chrome-light-1: #e2e2e6;
+  --chrome-light-2: #dcdce0;
+  --chrome-light-3: #d6d6da;
+  --selection: rgba(0, 102, 204, 0.14);
+  --focus-ring: rgba(0, 102, 204, 0.14);
+  --scroll-thumb: rgba(0, 0, 0, 0.18);
+  --canvas-dot: rgba(0, 0, 0, 0.14);
+  --canvas-edge: rgba(0, 0, 0, 0.18);
+
+  /* Inverted surfaces (dark panels sitting inside a light page):
+     CTA panel, API panel, code blocks, console. These stay dark in
+     light mode and soften — never invert — in dark mode. */
+  --inv-bg: #161617;
+  --inv-bg-deep: #0b0b0c;
+  --inv-ink: #f5f5f7;
+  --inv-ink-2: #a1a1a6;
+  --inv-ink-3: #86868b;
+  --inv-line: rgba(255, 255, 255, 0.09);
+  --inv-line-2: rgba(255, 255, 255, 0.24);
+  --inv-fill: rgba(255, 255, 255, 0.06);
+  --inv-code: #b9b9bf;
+  --inv-comment: #6e6e76;
+  --inv-ok: #5fc98e;
+  --inv-info: #7ea6e8;
 
   /* Radii — restrained, never childish */
   --r-xs: 6px;
@@ -109,16 +150,22 @@
   --gutter: 24px;
 }
 
-/* Dark context (used by select sections + dark UI mock panels) */
+/* Dark palette — single source of truth.
+   Applied globally via [data-theme="dark"] on <html>, and locally
+   via .dark on any section that inverts inside a light page. */
+[data-theme="dark"],
 .dark {
   color-scheme: dark;
   --bg: #000000;
   --bg-soft: #0c0c0d;
   --bg-sunk: #17171a;
   --surface: #101012;
+  --surface-2: #161618;
+  --surface-raised: #1c1c1f;
   --ink: #f5f5f7;
   --ink-2: #a1a1a6;
   --ink-3: #7e7e86;
+  --ink-inv: #1d1d1f;
   --line: rgba(255, 255, 255, 0.12);
   --line-2: rgba(255, 255, 255, 0.2);
   --fill: rgba(255, 255, 255, 0.07);
@@ -126,10 +173,50 @@
   --accent: #2997ff;
   --accent-strong: #4ba3ff;
   --accent-soft: rgba(41, 151, 255, 0.16);
+  --ok: #4fc98a;
+  --ok-soft: rgba(79, 201, 138, 0.16);
+  --warn: #e0a33c;
+  --warn-soft: rgba(224, 163, 60, 0.16);
+  --danger: #ff6b5a;
+  --danger-soft: rgba(255, 107, 90, 0.16);
+
+  --scrim: rgba(0, 0, 0, 0.6);
+  --glass-bg: rgba(10, 10, 11, 0.72);
+  --glass-raised: rgba(24, 24, 27, 0.88);
+  --knob: #f5f5f7;
+  --shimmer: rgba(255, 255, 255, 0.06);
+  --chrome-light-1: rgba(255, 255, 255, 0.18);
+  --chrome-light-2: rgba(255, 255, 255, 0.14);
+  --chrome-light-3: rgba(255, 255, 255, 0.1);
+  --selection: rgba(41, 151, 255, 0.26);
+  --focus-ring: rgba(41, 151, 255, 0.3);
+  --scroll-thumb: rgba(255, 255, 255, 0.2);
+  --canvas-dot: rgba(255, 255, 255, 0.12);
+  --canvas-edge: rgba(255, 255, 255, 0.22);
+
+  /* Inverted panels lift off the page instead of matching it */
+  --inv-bg: #1a1a1c;
+  --inv-bg-deep: #0e0e10;
+  --inv-line: rgba(255, 255, 255, 0.1);
+  --inv-fill: rgba(255, 255, 255, 0.05);
+
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-2: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+  --shadow-2: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -8px rgba(0, 0, 0, 0.7);
+  --shadow-3: 0 2px 4px rgba(0, 0, 0, 0.4), 0 24px 64px -16px rgba(0, 0, 0, 0.8);
+  --shadow-hero:
+    0 0 0 1px rgba(255, 255, 255, 0.08), 0 1.5px 3px rgba(0, 0, 0, 0.4),
+    0 12px 24px -8px rgba(0, 0, 0, 0.55), 0 40px 96px -24px rgba(0, 0, 0, 0.8);
+}
+
+/* Locally-inverted sections still paint their own background */
+.dark {
   background: var(--bg);
   color: var(--ink);
+}
+/* …but a .dark section inside an already-dark page is a no-op band,
+   so give it the soft elevation instead of pure black-on-black. */
+[data-theme="dark"] .dark {
+  background: var(--bg-soft);
 }
 
 /* ---------- Reset ---------- */
@@ -188,7 +275,7 @@ ol {
   list-style: none;
 }
 ::selection {
-  background: rgba(0, 102, 204, 0.14);
+  background: var(--selection);
 }
 :focus-visible {
   outline: 2px solid var(--accent);
@@ -198,14 +285,14 @@ ol {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
+  scrollbar-color: var(--scroll-thumb) transparent;
 }
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.18);
+  background: var(--scroll-thumb);
   border-radius: 8px;
   border: 3px solid transparent;
   background-clip: content-box;
@@ -384,16 +471,18 @@ ol {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 .btn-primary:hover {
-  background: #000;
+  background: color-mix(in srgb, var(--ink) 88%, #000);
   box-shadow:
     0 2px 4px rgba(0, 0, 0, 0.12),
     0 10px 24px -8px rgba(0, 0, 0, 0.35);
 }
-.dark .btn-primary {
-  background: #f5f5f7;
-  color: #1d1d1f;
+.dark .btn-primary,
+[data-theme="dark"] .btn-primary {
+  background: var(--ink);
+  color: var(--ink-inv);
 }
-.dark .btn-primary:hover {
+.dark .btn-primary:hover,
+[data-theme="dark"] .btn-primary:hover {
   background: #fff;
   box-shadow: 0 8px 24px -8px rgba(255, 255, 255, 0.25);
 }
@@ -405,14 +494,16 @@ ol {
 }
 .btn-secondary:hover {
   background: var(--bg-soft);
-  border-color: rgba(0, 0, 0, 0.24);
+  border-color: var(--line-2);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
 }
-.dark .btn-secondary {
+.dark .btn-secondary,
+[data-theme="dark"] .btn-secondary {
   box-shadow: none;
 }
-.dark .btn-secondary:hover {
-  border-color: rgba(255, 255, 255, 0.32);
+.dark .btn-secondary:hover,
+[data-theme="dark"] .btn-secondary:hover {
+  border-color: var(--line-2);
   background: var(--fill);
 }
 .btn-ghost {
@@ -474,13 +565,11 @@ ol {
   }
 }
 .glass {
-  background: rgba(251, 251, 253, 0.72);
+  background: var(--glass-bg);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
 }
-.dark .glass {
-  background: rgba(10, 10, 11, 0.66);
-}
+
 
 .chip {
   display: inline-flex;
@@ -578,7 +667,7 @@ a .chip {
 .select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3.5px rgba(0, 102, 204, 0.14);
+  box-shadow: 0 0 0 3.5px var(--focus-ring);
 }
 .label {
   display: block;
@@ -606,7 +695,7 @@ a .chip {
   white-space: nowrap;
 }
 .table td {
-  padding: 12px 14px;
+  padding: var(--cell-py) 14px;
   border-bottom: 1px solid var(--line);
   vertical-align: middle;
   letter-spacing: -0.008em;
@@ -654,19 +743,11 @@ a .chip {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.55),
+    var(--shimmer),
     transparent
   );
   transform: translateX(-100%);
   animation: shimmer 1.4s var(--ease) infinite;
-}
-.dark .skeleton::after {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.06),
-    transparent
-  );
 }
 @keyframes shimmer {
   to {
@@ -781,4 +862,39 @@ a .chip {
   body {
     font-size: 16px;
   }
+}
+
+/* ---------- User display preferences ---------- */
+/* Same rules as the media query above, but driven by the in-app toggle so a
+   user can force still interfaces even when the OS says otherwise. */
+[data-motion="reduce"] {
+  scroll-behavior: auto;
+}
+[data-motion="reduce"] .reveal,
+[data-motion="reduce"] .reveal-sharp,
+[data-motion="reduce"] .page-enter {
+  animation: none;
+  transition: none;
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+[data-motion="reduce"] *,
+[data-motion="reduce"] *::before,
+[data-motion="reduce"] *::after {
+  animation-duration: 0.001s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001s !important;
+  scroll-behavior: auto !important;
+}
+
+/* Compact density tightens the shared row/cell rhythm. Components opt in by
+   using these variables rather than hard-coded padding. */
+:root {
+  --row-py: 14px;
+  --cell-py: 12px;
+}
+[data-density="compact"] {
+  --row-py: 8px;
+  --cell-py: 7px;
 }

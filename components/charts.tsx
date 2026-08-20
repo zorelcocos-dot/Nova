@@ -218,13 +218,14 @@ export function Donut({
   const total = data.reduce((s, d) => s + d.value, 0);
   const r = 34;
   const circ = 2 * Math.PI * r;
+  // Derived from --ink so the ramp inverts correctly with the theme.
   const grays = [
-    "rgba(29,29,31,0.92)",
-    "rgba(29,29,31,0.62)",
-    "rgba(29,29,31,0.42)",
-    "rgba(29,29,31,0.26)",
-    "rgba(29,29,31,0.14)",
-    "rgba(29,29,31,0.08)",
+    "color-mix(in srgb, var(--ink) 92%, transparent)",
+    "color-mix(in srgb, var(--ink) 62%, transparent)",
+    "color-mix(in srgb, var(--ink) 42%, transparent)",
+    "color-mix(in srgb, var(--ink) 26%, transparent)",
+    "color-mix(in srgb, var(--ink) 15%, transparent)",
+    "color-mix(in srgb, var(--ink) 9%, transparent)",
   ];
   let offset = 0;
   return (
