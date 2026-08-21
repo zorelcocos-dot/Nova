@@ -273,7 +273,7 @@ export default function FeaturesPage() {
             </Link>
           </Reveal>
           <Reveal delay={110} className={s.featRowMedia}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(96px, 1fr))", gap: 12, minWidth: 0 }}>
               {integrations.map((tool) => {
                 const BrandIcon = brandIcons[tool.id];
                 return (

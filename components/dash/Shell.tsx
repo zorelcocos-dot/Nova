@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CommandPalette from "@/components/dash/CommandPalette";
 import Notifications from "@/components/dash/Notifications";
@@ -38,19 +38,55 @@ const titles: Record<string, string> = {
 
 export default function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [palOpen, setPalOpen] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
+  /* ⌘K / Ctrl-K toggles the command palette; single-letter sequences
+     after "g" jump between dashboard pages (matching the palette hints:
+     G O, G A, G W, G N, G S). Ignored while typing in a field. */
   useEffect(() => {
+    const G_ROUTES: Record<string, string> = {
+      o: "/dashboard",
+      a: "/dashboard/agents",
+      w: "/dashboard/automations",
+      n: "/dashboard/analytics",
+      s: "/dashboard/settings",
+    };
+    let gAt = 0;
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setPalOpen((o) => !o);
+        return;
+      }
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable)
+      )
+        return;
+      const key = e.key.toLowerCase();
+      if (key === "g") {
+        gAt = Date.now();
+        return;
+      }
+      if (gAt && Date.now() - gAt < 900) {
+        gAt = 0;
+        const href = G_ROUTES[key];
+        if (href) {
+          e.preventDefault();
+          router.push(href);
+        }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     setDrawer(false);

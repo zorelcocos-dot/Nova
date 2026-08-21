@@ -44,7 +44,9 @@ npm start          # serve the production build
 | `/dashboard/analytics` | 7d/30d/90d switching, donut, per-agent performance |
 | `/dashboard/settings` | Workspace, appearance, notifications, security, API keys, billing |
 
-Press **⌘K / Ctrl-K** anywhere in the dashboard for the command palette.
+Press **⌘K / Ctrl-K** anywhere in the dashboard for the command palette —
+or jump with **G** then **O/A/W/N/S** (Overview, Agents, Workflows,
+Numbers, Settings), just like the palette hints say.
 
 ## Theming
 

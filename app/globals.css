@@ -231,6 +231,14 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
 }
+/* No horizontal scrollbar, ever. Wide children can transiently exceed the
+   viewport (font swap before Geist loads, charts hydrating) — clip them
+   instead of flashing a scrollbar. `clip` (unlike `hidden`) creates no
+   scroll container, so sticky navbars and sidebars keep working. */
+html,
+body {
+  overflow-x: clip;
+}
 /* Anchored sections stop below the fixed navbar */
 [id] {
   scroll-margin-top: calc(var(--nav-h) + 28px);

@@ -831,13 +831,14 @@
     position: static;
   }
   .docLayout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .docNav {
     position: static;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 6px;
+    min-width: 0;
   }
   .docNavTitle {
     width: 100%;
@@ -846,6 +847,7 @@
     border: 1px solid var(--line);
     border-radius: 999px;
     padding: 6px 13px;
+    max-width: 100%;
   }
   .contactGrid,
   .apiPanel {

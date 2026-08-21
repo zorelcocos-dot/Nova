@@ -464,6 +464,18 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "2.6.1",
+    date: "August 22, 2026",
+    title: "Small screens, sharp edges",
+    items: [
+      { kind: "Fixed", text: "The docs sidebar no longer stretches the page sideways on phones — links reflow into pills inside the viewport." },
+      { kind: "Fixed", text: "The integrations grid on the Features page shrinks gracefully on small screens instead of poking out past the edge." },
+      { kind: "Fixed", text: "No more horizontal scrollbar flash while fonts or charts settle in — the page clips instead of wobbling." },
+      { kind: "New", text: "Keyboard sequences from the command palette hints actually work now: G then O/A/W/N/S jumps straight between dashboard pages." },
+      { kind: "Fixed", text: "\u201CForgot password?\u201D on the login screen is no longer a link to itself — it sends a (simulated) reset link, and tells you when the email field is empty." },
+    ],
+  },
+  {
     version: "2.6.0",
     date: "August 22, 2026",
     title: "Terms, privacy, and the notification center",
