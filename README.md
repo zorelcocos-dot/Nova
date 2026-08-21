@@ -54,7 +54,10 @@ Light, dark, and system themes ship site-wide.
   `<html>`. Light values live on `:root` in `app/globals.css`; every dark
   value lives in the single `[data-theme="dark"], .dark` block. An inline
   script in `app/layout.tsx` paints the stored choice before first paint,
-  so there is no flash.
+  so there is no flash. Switching themes cross-fades over ~400ms
+  (`.theme-switching` on `<html>`), and the cut is instant for
+  reduced-motion users. Secondary inks and status hues pass WCAG AA in
+  both palettes (plus a `prefers-contrast: more` boost).
 - **Where users switch it** — marketing navbar, dashboard topbar,
   Settings → Appearance, and the command palette ("dark", "light", "auto").
   The choice persists in `localStorage` under `nova-theme`.

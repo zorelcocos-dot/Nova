@@ -416,6 +416,18 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "2.5.0",
+    date: "August 22, 2026",
+    title: "The visual refresh",
+    items: [
+      { kind: "Improved", text: "Every icon in the product and on the website now comes from official sources — Lucide for interface icons, Simple Icons for integrations and brand marks. No more approximated glyphs." },
+      { kind: "Improved", text: "Dark mode got a full contrast pass: secondary text, status colors, and console panels now meet WCAG AA in both light and dark themes." },
+      { kind: "New", text: "Switching themes now cross-fades smoothly instead of hard-cutting — and it politely steps aside if you prefer reduced motion." },
+      { kind: "New", text: "The homepage hero has a soft theme-aware aurora backdrop, and link previews (Open Graph) ship a proper branded card." },
+      { kind: "Fixed", text: "Autofilled form fields no longer flash a pale yellow or blue box that clashes with dark mode." },
+    ],
+  },
+  {
     version: "2.4.0",
     date: "August 11, 2026",
     title: "Multi-agent handoffs",

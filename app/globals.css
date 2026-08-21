@@ -68,8 +68,8 @@
   --surface: #ffffff;
 
   --ink: #1d1d1f;
-  --ink-2: #6e6e73;
-  --ink-3: #86868b;
+  --ink-2: #5d5d62;
+  --ink-3: #6f6f75;
   --ink-inv: #f5f5f7;
 
   --line: rgba(0, 0, 0, 0.08);
@@ -84,10 +84,10 @@
   --accent-soft: rgba(0, 102, 204, 0.1);
 
   /* Muted status hues */
-  --ok: #2f9d66;
-  --ok-soft: rgba(47, 157, 102, 0.12);
-  --warn: #bf7b12;
-  --warn-soft: rgba(191, 123, 18, 0.12);
+  --ok: #1e7d4f;
+  --ok-soft: rgba(30, 125, 79, 0.12);
+  --warn: #9c620c;
+  --warn-soft: rgba(156, 98, 12, 0.12);
   --danger: #c8402f;
   --danger-soft: rgba(200, 64, 47, 0.12);
 
@@ -120,7 +120,7 @@
   --inv-line-2: rgba(255, 255, 255, 0.24);
   --inv-fill: rgba(255, 255, 255, 0.06);
   --inv-code: #b9b9bf;
-  --inv-comment: #6e6e76;
+  --inv-comment: #7c7c84;
   --inv-ok: #5fc98e;
   --inv-info: #7ea6e8;
 
@@ -835,6 +835,82 @@ a .chip {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001s !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Theme switch cross-fade ----------
+   ThemeProvider stamps .theme-switching on <html> for ~400ms while the
+   palette flips, so light↔dark dissolves instead of hard-cutting.
+   Reduced-motion users (OS or in-app) keep the instant cut. */
+html.theme-switching,
+html.theme-switching body,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 0.38s var(--ease),
+    color 0.38s var(--ease),
+    border-color 0.38s var(--ease),
+    box-shadow 0.38s var(--ease),
+    fill 0.38s var(--ease),
+    stroke 0.38s var(--ease),
+    opacity 0.38s var(--ease) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition-duration: 0.001s !important;
+  }
+}
+[data-motion="reduce"].theme-switching,
+[data-motion="reduce"].theme-switching *,
+[data-motion="reduce"].theme-switching *::before,
+[data-motion="reduce"].theme-switching *::after {
+  transition-duration: 0.001s !important;
+}
+
+/* ---------- Form autofill stays on-theme ----------
+   Browsers paint autofilled inputs with a fixed pale yellow/blue that
+   glares in dark mode; neutralize it in both palettes. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  box-shadow: 0 0 0 1000px var(--surface) inset;
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}
+
+/* ---------- High-contrast preference ----------
+   When the OS asks for more contrast, tighten the muted inks so secondary
+   copy still reads. */
+@media (prefers-contrast: more) {
+  :root {
+    --ink-2: #4a4a4f;
+    --ink-3: #5d5d62;
+    --line: rgba(0, 0, 0, 0.22);
+    --line-2: rgba(0, 0, 0, 0.34);
+  }
+  [data-theme="dark"],
+  .dark {
+    --ink-2: #c7c7cc;
+    --ink-3: #b1b1b7;
+    --line: rgba(255, 255, 255, 0.22);
+    --line-2: rgba(255, 255, 255, 0.34);
   }
 }
 

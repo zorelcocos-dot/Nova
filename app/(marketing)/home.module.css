@@ -4,8 +4,59 @@
 
 /* ---------- Hero ---------- */
 .hero {
+  position: relative;
   padding-top: calc(var(--nav-h) + clamp(60px, 9vw, 108px));
   overflow: hidden;
+  /* Aurora glow colors — set here so both theme variants live next to use */
+  --aurora-1: rgba(0, 102, 204, 0.08);
+  --aurora-2: rgba(116, 154, 255, 0.055);
+}
+/* Two soft light pools behind the hero copy. Purely additive tints on
+   the page background; they never carry meaning on their own. */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(72px);
+  pointer-events: none;
+}
+.hero::before {
+  width: 58vw;
+  height: clamp(340px, 44vw, 620px);
+  top: -14%;
+  left: 50%;
+  background: radial-gradient(closest-side, var(--aurora-1), transparent 72%);
+  animation: auroraDriftA 22s var(--ease) infinite alternate;
+}
+.hero::after {
+  width: 40vw;
+  height: clamp(260px, 34vw, 480px);
+  top: 6%;
+  left: 50%;
+  background: radial-gradient(closest-side, var(--aurora-2), transparent 72%);
+  animation: auroraDriftB 26s var(--ease) infinite alternate;
+}
+@keyframes auroraDriftA {
+  from {
+    transform: translate(-78%, 0) scale(1);
+  }
+  to {
+    transform: translate(-58%, 5%) scale(1.08);
+  }
+}
+@keyframes auroraDriftB {
+  from {
+    transform: translate(-24%, 2%) scale(1);
+  }
+  to {
+    transform: translate(-44%, -4%) scale(1.1);
+  }
+}
+:global([data-theme="dark"]) .hero {
+  --aurora-1: rgba(41, 151, 255, 0.11);
+  --aurora-2: rgba(84, 214, 255, 0.05);
 }
 .heroInner {
   max-width: 900px;
