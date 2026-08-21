@@ -18,14 +18,13 @@ export default function BlogPage() {
       <section className={`${s.pageHero} ${s.pageHeroCenter}`}>
         <div className="container">
           <div className={s.pageHeroInner}>
-            <Reveal>
-              <p className="eyebrow">The NOVA Journal</p>
-              <h1 className="h-1">Notes from the workbench.</h1>
-              <p className="lead">
-                On agents, automation, and building software that lowers the
-                room&rsquo;s blood pressure.
-              </p>
-            </Reveal>
+                        <p className="eyebrow">The NOVA Journal</p>
+            <h1 className="h-1">Notes from the workbench.</h1>
+            <p className="lead">
+              On agents, automation, and building software that lowers the
+              room&rsquo;s blood pressure.
+            </p>
+          
           </div>
         </div>
       </section>

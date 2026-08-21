@@ -22,14 +22,13 @@ export default function ChangelogPage() {
     <>
       <section className={s.pageHero}>
         <div className="container" style={{ maxWidth: 1024 }}>
-          <Reveal>
-            <p className="eyebrow">Changelog</p>
-            <h1 className="h-1">What&rsquo;s new in NOVA.</h1>
-            <p className="lead">
-              We ship weekly and write about it in plain language. Subscribe
-              in your dashboard or follow along here.
-            </p>
-          </Reveal>
+                    <p className="eyebrow">Changelog</p>
+          <h1 className="h-1">What&rsquo;s new in NOVA.</h1>
+          <p className="lead">
+            We ship weekly and write about it in plain language. Subscribe
+            in your dashboard or follow along here.
+          </p>
+        
         </div>
       </section>
 

@@ -61,14 +61,13 @@ export default function PricingPage() {
       <section className={`${s.pageHero} ${s.pageHeroCenter}`}>
         <div className="container">
           <div className={s.pageHeroInner}>
-            <Reveal>
-              <p className="eyebrow">Pricing</p>
-              <h1 className="h-1">Pricing that stays out of the way.</h1>
-              <p className="lead">
-                Start free. Pay for outcomes as you scale. No seat traps, no
-                surprise invoices, no call required to find out the price.
-              </p>
-            </Reveal>
+                        <p className="eyebrow">Pricing</p>
+            <h1 className="h-1">Pricing that stays out of the way.</h1>
+            <p className="lead">
+              Start free. Pay for outcomes as you scale. No seat traps, no
+              surprise invoices, no call required to find out the price.
+            </p>
+          
           </div>
         </div>
       </section>

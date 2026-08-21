@@ -32,24 +32,23 @@ export default function FeaturesPage() {
       <section className={`${s.pageHero} ${s.pageHeroCenter}`}>
         <div className="container">
           <div className={s.pageHeroInner}>
-            <Reveal>
-              <p className="eyebrow">Product</p>
-              <h1 className="h-1">
-                Everything a team needs to automate real work.
-              </h1>
-              <p className="lead">
-                Agents that take ownership, workflows you can reason about, and
-                analytics that prove the value — one coherent platform.
-              </p>
-              <div className={s.heroCtas}>
-                <Link href="/signup" className="btn btn-primary">
-                  Start building free
-                </Link>
-                <Link href="/pricing" className="btn btn-secondary">
-                  See pricing
-                </Link>
-              </div>
-            </Reveal>
+                        <p className="eyebrow">Product</p>
+            <h1 className="h-1">
+              Everything a team needs to automate real work.
+            </h1>
+            <p className="lead">
+              Agents that take ownership, workflows you can reason about, and
+              analytics that prove the value — one coherent platform.
+            </p>
+            <div className={s.heroCtas}>
+              <Link href="/signup" className="btn btn-primary">
+                Start building free
+              </Link>
+              <Link href="/pricing" className="btn btn-secondary">
+                See pricing
+              </Link>
+            </div>
+          
           </div>
         </div>
       </section>

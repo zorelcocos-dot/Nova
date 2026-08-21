@@ -1,4 +1,8 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = { title: "Overview" };
+
 import { AreaChart, Sparkline } from "@/components/charts";
 import {
   IconClock,

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Reveal from "@/components/Reveal";
 import s from "../sub.module.css";
 
 export const metadata: Metadata = {
@@ -59,18 +58,17 @@ export default function DocsPage() {
 
           {/* Content */}
           <div className={s.docContent}>
-            <Reveal>
-              <div className={s.docSection} id="introduction">
-                <p className="eyebrow">Documentation</p>
-                <h1 className="h-1" style={{ marginTop: 14 }}>Getting started with NOVA</h1>
-                <p>
-                  NOVA is the AI productivity platform for teams: agents that
-                  own categories of work, automations that run them, and
-                  analytics that prove the result. This guide takes you from
-                  signup to a running production setup in about ten minutes.
-                </p>
-              </div>
-            </Reveal>
+                        <div className={s.docSection} id="introduction">
+              <p className="eyebrow">Documentation</p>
+              <h1 className="h-1" style={{ marginTop: 14 }}>Getting started with NOVA</h1>
+              <p>
+                NOVA is the AI productivity platform for teams: agents that
+                own categories of work, automations that run them, and
+                analytics that prove the result. This guide takes you from
+                signup to a running production setup in about ten minutes.
+              </p>
+            </div>
+          
 
             <div className={s.docSection} id="quickstart">
               <h2 className="h-2">Quickstart</h2>

@@ -38,35 +38,27 @@ export default function HomePage() {
       <section className={h.hero}>
         <div className="container">
           <div className={h.heroInner}>
-            <Reveal>
-              <Link href="/blog/introducing-nova-ai-2" className={h.heroLabel}>
-                <span className={`dot ${h.heroDot}`} />
-                Introducing NOVA AI 2.0
-                <IconChevronRight size={14} />
+            <Link href="/blog/introducing-nova-ai-2" className={h.heroLabel}>
+              <span className={`dot ${h.heroDot}`} />
+              Introducing NOVA AI 2.0
+              <IconChevronRight size={14} />
+            </Link>
+            <h1 className={`h-display ${h.heroTitle}`}>
+              Your work, automated&nbsp;by&nbsp;AI.
+            </h1>
+            <p className={`lead ${h.heroSub}`}>
+              NOVA is the AI productivity platform that plans, executes, and
+              ships your team&rsquo;s busywork — so you can focus on the work
+              that matters.
+            </p>
+            <div className={h.heroCtas}>
+              <Link href="/signup" className="btn btn-primary btn-lg">
+                Start building free
               </Link>
-            </Reveal>
-            <Reveal delay={70} blur>
-              <h1 className={`h-display ${h.heroTitle}`}>
-                Your work, automated&nbsp;by&nbsp;AI.
-              </h1>
-            </Reveal>
-            <Reveal delay={140}>
-              <p className={`lead ${h.heroSub}`}>
-                NOVA is the AI productivity platform that plans, executes, and
-                ships your team&rsquo;s busywork — so you can focus on the work
-                that matters.
-              </p>
-            </Reveal>
-            <Reveal delay={210}>
-              <div className={h.heroCtas}>
-                <Link href="/signup" className="btn btn-primary btn-lg">
-                  Start building free
-                </Link>
-                <Link href="/features" className="link-arrow" style={{ fontSize: 16 }}>
-                  See how it works <IconChevronRight size={16} />
-                </Link>
-              </div>
-            </Reveal>
+              <Link href="/features" className="link-arrow" style={{ fontSize: 16 }}>
+                See how it works <IconChevronRight size={16} />
+              </Link>
+            </div>
           </div>
 
           <Reveal delay={280}>

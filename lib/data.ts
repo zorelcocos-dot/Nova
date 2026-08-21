@@ -464,6 +464,16 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "2.8.0",
+    date: "August 22, 2026",
+    title: "Faster first paint",
+    items: [
+      { kind: "Improved", text: "Page heroes now paint with the HTML — no more waiting for JavaScript hydration to reveal the headline. Largest Contentful Paint dropped by roughly a second on throttled mobile connections across the site." },
+      { kind: "Improved", text: "Verified with Lighthouse: performance 90–98, accessibility 100, best practices 100, and SEO 100 across the main pages (the dashboard is deliberately noindex — it's a signed-in surface)." },
+      { kind: "Fixed", text: "The dashboard Overview had no page title of its own — browser tabs now read “Overview — NOVA”." },
+    ],
+  },
+  {
     version: "2.7.0",
     date: "August 22, 2026",
     title: "The accessibility pass",
