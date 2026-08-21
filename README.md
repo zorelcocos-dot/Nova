@@ -6,8 +6,11 @@ hairline borders, restrained motion, and fully rendered product UI.
 No gradients-as-personality, no glass-everything, no filler.
 
 Built with **Next.js 15 (App Router) · TypeScript · CSS Modules**. One
-runtime dependency set (`next`, `react`, `react-dom`) — charts, icons,
-accordions, and the command palette are all hand-rolled.
+runtime dependency set (`next`, `react`, `react-dom`) — charts,
+accordions, and the command palette are all hand-rolled. UI icons and
+brand marks are vendored verbatim into `components/icons.tsx` from
+official sources: [Lucide](https://lucide.dev) (ISC) for UI icons and
+[Simple Icons](https://simpleicons.org) (CC0) for brand marks.
 
 ## Quick start
 
