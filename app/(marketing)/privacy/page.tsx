@@ -150,7 +150,7 @@ export default function PrivacyPage() {
               </ul>
               <p>
                 The current list with locations and purposes is maintained at{" "}
-                <Link href="/docs#security" style={{ color: "var(--accent)" }}>
+                <Link href="/docs#security" className={s.docLink}>
                   docs &rarr; security
                 </Link>
                 , and changes are announced 30 days ahead on the changelog.
@@ -195,7 +195,7 @@ export default function PrivacyPage() {
                 travels under EU Standard Contractual Clauses and the UK Addendum,
                 together with the technical measures described in §8. EU
                 customers also receive our DPA with the SCCs annexed — ask{" "}
-                <Link href="mailto:legal@nova.build" style={{ color: "var(--accent)" }}>
+                <Link href="mailto:legal@nova.build" className={s.docLink}>
                   legal@nova.build
                 </Link>
                 .
@@ -216,7 +216,7 @@ export default function PrivacyPage() {
               </p>
               <p>
                 Exercise any right from Settings, or write to{" "}
-                <Link href="mailto:privacy@nova.build" style={{ color: "var(--accent)" }}>
+                <Link href="mailto:privacy@nova.build" className={s.docLink}>
                   privacy@nova.build
                 </Link>{" "}
                 — we answer within 30 days, usually in a day or two. You also
@@ -245,7 +245,7 @@ export default function PrivacyPage() {
                 owners and banner the dashboard 30 days before it takes
                 effect. The live version always lives here. Controller: NOVA
                 Labs, Inc. Privacy questions and requests:{" "}
-                <Link href="mailto:privacy@nova.build" style={{ color: "var(--accent)" }}>
+                <Link href="mailto:privacy@nova.build" className={s.docLink}>
                   privacy@nova.build
                 </Link>
                 .

@@ -464,6 +464,17 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "2.7.0",
+    date: "August 22, 2026",
+    title: "The accessibility pass",
+    items: [
+      { kind: "Improved", text: "A full WCAG audit with a real screen-reader rules engine, in both themes, on every page. Every serious finding is fixed: status chips, sidebar hints, and the dashboard search field now clear AA with room to spare." },
+      { kind: "Improved", text: "Inline links in legal and docs pages now underline — no more spotting them by color alone — and comparison-table checkmarks carry screen-reader text instead of illegal aria-labels." },
+      { kind: "Fixed", text: "Heading outline repaired: plan names, footer columns, and the auth pages' missing main landmark no longer skip levels or float outside landmarks." },
+      { kind: "Improved", text: "FAQ accordion panels are properly labelled regions for assistive tech." },
+    ],
+  },
+  {
     version: "2.6.1",
     date: "August 22, 2026",
     title: "Small screens, sharp edges",

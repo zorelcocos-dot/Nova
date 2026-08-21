@@ -69,7 +69,7 @@
 
   --ink: #1d1d1f;
   --ink-2: #5d5d62;
-  --ink-3: #6f6f75;
+  --ink-3: #6b6b71;
   --ink-inv: #f5f5f7;
 
   --line: rgba(0, 0, 0, 0.08);
@@ -84,8 +84,8 @@
   --accent-soft: rgba(0, 102, 204, 0.1);
 
   /* Muted status hues */
-  --ok: #1e7d4f;
-  --ok-soft: rgba(30, 125, 79, 0.12);
+  --ok: #146b42;
+  --ok-soft: rgba(20, 107, 66, 0.11);
   --warn: #9c620c;
   --warn-soft: rgba(156, 98, 12, 0.12);
   --danger: #c8402f;
@@ -164,7 +164,7 @@
   --surface-raised: #1c1c1f;
   --ink: #f5f5f7;
   --ink-2: #a1a1a6;
-  --ink-3: #7e7e86;
+  --ink-3: #8a8a91;
   --ink-inv: #1d1d1f;
   --line: rgba(255, 255, 255, 0.12);
   --line-2: rgba(255, 255, 255, 0.2);
@@ -284,6 +284,19 @@ ol {
 }
 ::selection {
   background: var(--selection);
+}
+/* Visually-hidden text for screen readers (icon-only meaning, etc.) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 :focus-visible {
   outline: 2px solid var(--accent);

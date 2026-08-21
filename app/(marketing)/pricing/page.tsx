@@ -40,11 +40,18 @@ const pricingFaqs = [
 function Cell({ v }: { v: string | boolean }) {
   if (v === true)
     return (
-      <span className={s.cellYes} aria-label="Included">
-        <IconCheck size={15} />
+      <span className={s.cellYes}>
+        <IconCheck size={15} aria-hidden />
+        <span className="sr-only">Included</span>
       </span>
     );
-  if (v === false) return <span className={s.cellNo}>—</span>;
+  if (v === false)
+    return (
+      <span className={s.cellNo}>
+        <span aria-hidden>—</span>
+        <span className="sr-only">Not included</span>
+      </span>
+    );
   return <span style={{ fontVariantNumeric: "tabular-nums" }}>{v}</span>;
 }
 

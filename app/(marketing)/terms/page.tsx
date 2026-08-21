@@ -77,7 +77,7 @@ export default function TermsPage() {
                 work using AI agents, workflow automation, and integrations
                 with tools you connect. We provide the platform as it exists
                 and evolve it continuously — features may change, and the{" "}
-                <Link href="/changelog" style={{ color: "var(--accent)" }}>
+                <Link href="/changelog" className={s.docLink}>
                   changelog
                 </Link>{" "}
                 always says what shipped and when. You need an account and a
@@ -127,7 +127,7 @@ export default function TermsPage() {
                 We may suspend conduct that risks the platform or other
                 customers, with notice whenever practical. Disputes about
                 suspensions can always reach a human — see{" "}
-                <Link href="#contact" style={{ color: "var(--accent)" }}>
+                <Link href="#contact" className={s.docLink}>
                   §12
                 </Link>
                 .
@@ -178,7 +178,7 @@ export default function TermsPage() {
                 serious violations of §4). On termination, your data stays
                 exportable for 30 days, then it is deleted as described in
                 the{" "}
-                <Link href="/privacy" style={{ color: "var(--accent)" }}>
+                <Link href="/privacy" className={s.docLink}>
                   Privacy Policy
                 </Link>
                 . Sections that should survive termination — ownership,
@@ -229,11 +229,11 @@ export default function TermsPage() {
               <p>
                 NOVA Labs, Inc., 2150 Shattuck Ave, Berkeley, CA 94704, USA.
                 Legal questions, notices, and DPA requests:{" "}
-                <Link href="mailto:legal@nova.build" style={{ color: "var(--accent)" }}>
+                <Link href="mailto:legal@nova.build" className={s.docLink}>
                   legal@nova.build
                 </Link>
                 . Everything else: the{" "}
-                <Link href="/contact" style={{ color: "var(--accent)" }}>
+                <Link href="/contact" className={s.docLink}>
                   contact page
                 </Link>{" "}
                 — a real person replies within one business day.

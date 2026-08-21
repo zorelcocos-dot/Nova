@@ -7,5 +7,5 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <main>{children}</main>;
 }

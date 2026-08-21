@@ -160,7 +160,10 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               <i />
             </div>
             <div className={d.usageNote}>
-              Pro plan · <Link href="/pricing" style={{ color: "var(--accent)" }}>Upgrade to Scale</Link>
+              Pro plan ·{" "}
+              <Link href="/pricing" className={d.usageLink}>
+                Upgrade to Scale
+              </Link>
             </div>
           </div>
           <div className={d.userRow}>

@@ -53,7 +53,7 @@ export default function Footer() {
 
         {columns.map((col) => (
           <div key={col.title} className={styles.col}>
-            <h3 className={styles.colTitle}>{col.title}</h3>
+            <h2 className={styles.colTitle}>{col.title}</h2>
             <ul className={styles.colLinks}>
               {col.links.map((l) => (
                 <li key={l.label}>

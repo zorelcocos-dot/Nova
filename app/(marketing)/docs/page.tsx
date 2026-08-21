@@ -210,7 +210,7 @@ POST   /webhooks           subscribe to the event stream`}</pre>
                 data is exportable and deletable on demand. We process data
                 under a standard DPA with EU SCCs, and publish a subprocessor
                 list we actively minimize. The full policy lives on the{" "}
-                <Link href="/privacy" style={{ color: "var(--accent)" }}>
+                <Link href="/privacy" className={s.docLink}>
                   privacy page
                 </Link>
                 .
@@ -225,7 +225,7 @@ POST   /webhooks           subscribe to the event stream`}</pre>
                 produce for you; we own the platform. Fair-use applies to the
                 free tier; uptime commitments and remedies are spelled out in
                 the Scale SLA. Read the full text on the{" "}
-                <Link href="/terms" style={{ color: "var(--accent)" }}>
+                <Link href="/terms" className={s.docLink}>
                   terms page
                 </Link>
                 .

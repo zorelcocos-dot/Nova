@@ -599,6 +599,19 @@
   padding-top: 20px;
   border-top: 1px solid var(--line);
 }
+/* Inline link inside a paragraph — must be distinguishable by more than
+   color alone (WCAG 1.4.1), so it underlines. */
+.docLink {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 42%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s var(--ease);
+}
+.docLink:hover {
+  text-decoration-color: var(--accent);
+}
 .docList {
   margin-top: 14px;
   display: flex;
