@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import CommandPalette from "@/components/dash/CommandPalette";
+import Notifications from "@/components/dash/Notifications";
 import {
   LogoMark,
   IconGrid,
@@ -12,7 +13,6 @@ import {
   IconChart,
   IconGear,
   IconSearch,
-  IconBell,
   IconMenu,
   IconLogout,
 } from "@/components/icons";
@@ -171,10 +171,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             <span className="kbd">⌘K</span>
           </button>
           <ThemeToggle compact />
-          <button className={d.topIconBtn} aria-label="Notifications">
-            <IconBell size={17} />
-            <span className={d.dotp} />
-          </button>
+          <Notifications />
           <span className={d.topAv} aria-label="Account">
             MC
           </span>

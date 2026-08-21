@@ -76,8 +76,9 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
       {isSignup ? (
         <>
           <p className={s.legal}>
-            By creating an account you agree to NOVA&rsquo;s Terms of Service
-            and acknowledge the Privacy Policy.
+            By creating an account you agree to NOVA&rsquo;s{" "}
+            <Link href="/terms">Terms of Service</Link> and acknowledge the{" "}
+            <Link href="/privacy">Privacy Policy</Link>.
           </p>
           <p className={s.microcopy}>
             Already have an account? <Link href="/login">Log in</Link>

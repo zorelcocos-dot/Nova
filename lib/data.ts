@@ -404,6 +404,54 @@ export const activityFeed = [
   { who: "Research Agent", what: "Delivered competitive brief to Growth", when: "1 hour ago", kind: "agent" },
 ];
 
+/* ---------------- Notifications ---------------- */
+
+export type NotificationKind = "approval" | "success" | "alert" | "info";
+export type Notification = {
+  id: string;
+  kind: NotificationKind;
+  title: string;
+  body: string;
+  time: string;
+  unread: boolean;
+};
+
+export const notifications: Notification[] = [
+  {
+    id: "n1",
+    kind: "approval",
+    title: "Sales Agent needs approval",
+    body: "Outreach sequence for Meridian is waiting — 4 emails drafted, review before 5pm.",
+    time: "9 min ago",
+    unread: true,
+  },
+  {
+    id: "n2",
+    kind: "alert",
+    title: "Churn-risk alert to CSM is paused",
+    body: "The automation failed twice overnight after the HubSpot scope change.",
+    time: "1 hour ago",
+    unread: true,
+  },
+  {
+    id: "n3",
+    kind: "success",
+    title: "Weekly report delivered",
+    body: "Data Agent posted the anomalies report to #data — 3 insights flagged.",
+    time: "32 min ago",
+    unread: true,
+  },
+  {
+    id: "n4",
+    kind: "info",
+    title: "NOVA 2.5 is out",
+    body: "Official icon set, WCAG AA contrast, and smooth theme switching. Read the changelog.",
+    time: "2 hours ago",
+    unread: false,
+  },
+];
+
+
 /* ---------------- Changelog ---------------- */
 
 export type ChangeKind = "New" | "Improved" | "Fixed";
@@ -415,6 +463,16 @@ export type ChangelogEntry = {
 };
 
 export const changelog: ChangelogEntry[] = [
+  {
+    version: "2.6.0",
+    date: "August 22, 2026",
+    title: "Terms, privacy, and the notification center",
+    items: [
+      { kind: "New", text: "Full Terms of Service and Privacy Policy, written in plain English and linked from the footer, signup, and docs — no more 'available on request'." },
+      { kind: "New", text: "The dashboard bell is now a real notification center: approvals, alerts, and deliveries in one popover, with mark-all-read and per-item dismiss." },
+      { kind: "Improved", text: "Every interactive element was click-tested end to end — filters, switches, forms, SSO buttons, and the command palette all respond." },
+    ],
+  },
   {
     version: "2.5.0",
     date: "August 22, 2026",

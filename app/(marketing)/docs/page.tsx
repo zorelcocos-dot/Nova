@@ -209,7 +209,11 @@ POST   /webhooks           subscribe to the event stream`}</pre>
                 technically, and architecturally. Workspaces are isolated;
                 data is exportable and deletable on demand. We process data
                 under a standard DPA with EU SCCs, and publish a subprocessor
-                list we actively minimize.
+                list we actively minimize. The full policy lives on the{" "}
+                <Link href="/privacy" style={{ color: "var(--accent)" }}>
+                  privacy page
+                </Link>
+                .
               </p>
             </div>
 
@@ -220,8 +224,11 @@ POST   /webhooks           subscribe to the event stream`}</pre>
                 MSA. You own your workspace data and the outputs your agents
                 produce for you; we own the platform. Fair-use applies to the
                 free tier; uptime commitments and remedies are spelled out in
-                the Scale SLA. Full text available on request from the{" "}
-                <Link href="/contact" style={{ color: "var(--accent)" }}>contact page</Link>.
+                the Scale SLA. Read the full text on the{" "}
+                <Link href="/terms" style={{ color: "var(--accent)" }}>
+                  terms page
+                </Link>
+                .
               </p>
             </div>
           </div>

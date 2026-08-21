@@ -70,10 +70,10 @@ export default function Footer() {
       <div className={`container ${styles.bottom}`}>
         <span>© 2026 NOVA Labs, Inc. All rights reserved.</span>
         <div className={styles.bottomLinks}>
-          <Link href="/docs#privacy" className={styles.bottomLink}>
+          <Link href="/privacy" className={styles.bottomLink}>
             Privacy
           </Link>
-          <Link href="/docs#terms" className={styles.bottomLink}>
+          <Link href="/terms" className={styles.bottomLink}>
             Terms
           </Link>
           <span className={styles.craft}>Designed in California</span>

@@ -589,11 +589,20 @@
 .docSection .codeBlock {
   margin-top: 16px;
 }
+/* Intro paragraph under a doc/legal page title */
+.docLead {
+  margin-top: 16px;
+}
+/* "Read next" cross-link at the end of a legal page */
+.docNext {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
 .docList {
   margin-top: 14px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: column;  gap: 10px;
 }
 .docList li {
   font-size: 14.5px;
