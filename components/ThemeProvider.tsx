@@ -51,9 +51,27 @@ function systemPrefersDark() {
 function apply(theme: Theme) {
   const dark = theme === "dark" || (theme === "system" && systemPrefersDark());
   const root = document.documentElement;
+  const changing = root.dataset.theme !== undefined && root.dataset.theme !== (dark ? "dark" : "light");
   root.dataset.theme = dark ? "dark" : "light";
   root.style.colorScheme = dark ? "dark" : "light";
+  if (changing) crossfade();
   return dark ? ("dark" as const) : ("light" as const);
+}
+
+/* Stamp .theme-switching on <html> for ~420ms so the palette flip
+   cross-fades (see globals.css). Skipped for reduced-motion users. */
+let fadeTimer: ReturnType<typeof setTimeout> | undefined;
+function crossfade() {
+  if (
+    typeof window === "undefined" ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    document.documentElement.dataset.motion === "reduce"
+  )
+    return;
+  const root = document.documentElement;
+  root.classList.add("theme-switching");
+  if (fadeTimer) clearTimeout(fadeTimer);
+  fadeTimer = setTimeout(() => root.classList.remove("theme-switching"), 420);
 }
 
 function applyPrefs(p: Prefs) {

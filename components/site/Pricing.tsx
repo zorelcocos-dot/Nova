@@ -50,7 +50,7 @@ export default function Pricing() {
               {plan.featured && (
                 <span className={styles.featuredChip}>Most popular</span>
               )}
-              <h3 className={styles.planName}>{plan.name}</h3>
+              <h2 className={styles.planName}>{plan.name}</h2>
               <p className={styles.blurb}>{plan.blurb}</p>
 
               <div className={styles.priceRow}>

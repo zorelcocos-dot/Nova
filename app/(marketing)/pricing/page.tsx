@@ -40,11 +40,18 @@ const pricingFaqs = [
 function Cell({ v }: { v: string | boolean }) {
   if (v === true)
     return (
-      <span className={s.cellYes} aria-label="Included">
-        <IconCheck size={15} />
+      <span className={s.cellYes}>
+        <IconCheck size={15} aria-hidden />
+        <span className="sr-only">Included</span>
       </span>
     );
-  if (v === false) return <span className={s.cellNo}>—</span>;
+  if (v === false)
+    return (
+      <span className={s.cellNo}>
+        <span aria-hidden>—</span>
+        <span className="sr-only">Not included</span>
+      </span>
+    );
   return <span style={{ fontVariantNumeric: "tabular-nums" }}>{v}</span>;
 }
 
@@ -54,14 +61,13 @@ export default function PricingPage() {
       <section className={`${s.pageHero} ${s.pageHeroCenter}`}>
         <div className="container">
           <div className={s.pageHeroInner}>
-            <Reveal>
-              <p className="eyebrow">Pricing</p>
-              <h1 className="h-1">Pricing that stays out of the way.</h1>
-              <p className="lead">
-                Start free. Pay for outcomes as you scale. No seat traps, no
-                surprise invoices, no call required to find out the price.
-              </p>
-            </Reveal>
+                        <p className="eyebrow">Pricing</p>
+            <h1 className="h-1">Pricing that stays out of the way.</h1>
+            <p className="lead">
+              Start free. Pay for outcomes as you scale. No seat traps, no
+              surprise invoices, no call required to find out the price.
+            </p>
+          
           </div>
         </div>
       </section>

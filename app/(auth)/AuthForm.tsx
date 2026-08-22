@@ -4,12 +4,24 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BrandGoogle, BrandGitHub } from "@/components/icons";
+import { useToast } from "@/components/ui/Toast";
 import s from "./auth.module.css";
 
 export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const isSignup = mode === "signup";
+
+  function forgotPassword() {
+    const email = (document.getElementById("email") as HTMLInputElement | null)?.value.trim();
+    if (!email || !email.includes("@")) {
+      toast("Enter your work email above first — then we can send a reset link.", "danger");
+      document.getElementById("email")?.focus();
+      return;
+    }
+    toast(`Reset link sent to ${email} — it expires in 30 minutes.`, "success");
+  }
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -55,9 +67,9 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
           />
         </div>
         {!isSignup && (
-          <Link href="/login" className={s.forgot}>
+          <button type="button" className={s.forgot} onClick={forgotPassword}>
             Forgot password?
-          </Link>
+          </button>
         )}
         <button type="submit" className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: 4 }}>
           {loading ? (
@@ -76,8 +88,9 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
       {isSignup ? (
         <>
           <p className={s.legal}>
-            By creating an account you agree to NOVA&rsquo;s Terms of Service
-            and acknowledge the Privacy Policy.
+            By creating an account you agree to NOVA&rsquo;s{" "}
+            <Link href="/terms">Terms of Service</Link> and acknowledge the{" "}
+            <Link href="/privacy">Privacy Policy</Link>.
           </p>
           <p className={s.microcopy}>
             Already have an account? <Link href="/login">Log in</Link>

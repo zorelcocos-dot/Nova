@@ -46,17 +46,16 @@ export default function AboutPage() {
       <section className={`${s.pageHero} ${s.pageHeroCenter}`}>
         <div className="container">
           <div className={s.pageHeroInner} style={{ maxWidth: 860 }}>
-            <Reveal>
-              <p className="eyebrow">About NOVA</p>
-              <h1 className="h-1">
-                Work is for judgment. Logistics are for machines.
-              </h1>
-              <p className="lead">
-                We started NOVA because the average knowledge worker spends
-                60% of the week on work about work. That felt less like a
-                business opportunity and more like a bug.
-              </p>
-            </Reveal>
+                        <p className="eyebrow">About NOVA</p>
+            <h1 className="h-1">
+              Work is for judgment. Logistics are for machines.
+            </h1>
+            <p className="lead">
+              We started NOVA because the average knowledge worker spends
+              60% of the week on work about work. That felt less like a
+              business opportunity and more like a bug.
+            </p>
+          
           </div>
         </div>
       </section>

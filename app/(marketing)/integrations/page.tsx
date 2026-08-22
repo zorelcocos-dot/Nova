@@ -16,15 +16,14 @@ export default function IntegrationsPage() {
       <section className={`${s.pageHero} ${s.pageHeroCenter}`}>
         <div className="container">
           <div className={s.pageHeroInner}>
-            <Reveal>
-              <p className="eyebrow">Integrations</p>
-              <h1 className="h-1">Connected where work happens.</h1>
-              <p className="lead">
-                NOVA reads from and writes to the tools your team already
-                trusts — with permissions inherited from the source and
-                revocable at any moment.
-              </p>
-            </Reveal>
+                        <p className="eyebrow">Integrations</p>
+            <h1 className="h-1">Connected where work happens.</h1>
+            <p className="lead">
+              NOVA reads from and writes to the tools your team already
+              trusts — with permissions inherited from the source and
+              revocable at any moment.
+            </p>
+          
           </div>
         </div>
       </section>

@@ -589,11 +589,33 @@
 .docSection .codeBlock {
   margin-top: 16px;
 }
+/* Intro paragraph under a doc/legal page title */
+.docLead {
+  margin-top: 16px;
+}
+/* "Read next" cross-link at the end of a legal page */
+.docNext {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+/* Inline link inside a paragraph — must be distinguishable by more than
+   color alone (WCAG 1.4.1), so it underlines. */
+.docLink {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 42%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s var(--ease);
+}
+.docLink:hover {
+  text-decoration-color: var(--accent);
+}
 .docList {
   margin-top: 14px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: column;  gap: 10px;
 }
 .docList li {
   font-size: 14.5px;
@@ -822,13 +844,14 @@
     position: static;
   }
   .docLayout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .docNav {
     position: static;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 6px;
+    min-width: 0;
   }
   .docNavTitle {
     width: 100%;
@@ -837,6 +860,7 @@
     border: 1px solid var(--line);
     border-radius: 999px;
     padding: 6px 13px;
+    max-width: 100%;
   }
   .contactGrid,
   .apiPanel {

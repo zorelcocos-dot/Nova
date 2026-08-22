@@ -53,7 +53,7 @@ export default function Footer() {
 
         {columns.map((col) => (
           <div key={col.title} className={styles.col}>
-            <h3 className={styles.colTitle}>{col.title}</h3>
+            <h2 className={styles.colTitle}>{col.title}</h2>
             <ul className={styles.colLinks}>
               {col.links.map((l) => (
                 <li key={l.label}>
@@ -70,10 +70,10 @@ export default function Footer() {
       <div className={`container ${styles.bottom}`}>
         <span>© 2026 NOVA Labs, Inc. All rights reserved.</span>
         <div className={styles.bottomLinks}>
-          <Link href="/docs#privacy" className={styles.bottomLink}>
+          <Link href="/privacy" className={styles.bottomLink}>
             Privacy
           </Link>
-          <Link href="/docs#terms" className={styles.bottomLink}>
+          <Link href="/terms" className={styles.bottomLink}>
             Terms
           </Link>
           <span className={styles.craft}>Designed in California</span>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Reveal from "@/components/Reveal";
 import s from "../sub.module.css";
 
 export const metadata: Metadata = {
@@ -59,18 +58,17 @@ export default function DocsPage() {
 
           {/* Content */}
           <div className={s.docContent}>
-            <Reveal>
-              <div className={s.docSection} id="introduction">
-                <p className="eyebrow">Documentation</p>
-                <h1 className="h-1" style={{ marginTop: 14 }}>Getting started with NOVA</h1>
-                <p>
-                  NOVA is the AI productivity platform for teams: agents that
-                  own categories of work, automations that run them, and
-                  analytics that prove the result. This guide takes you from
-                  signup to a running production setup in about ten minutes.
-                </p>
-              </div>
-            </Reveal>
+                        <div className={s.docSection} id="introduction">
+              <p className="eyebrow">Documentation</p>
+              <h1 className="h-1" style={{ marginTop: 14 }}>Getting started with NOVA</h1>
+              <p>
+                NOVA is the AI productivity platform for teams: agents that
+                own categories of work, automations that run them, and
+                analytics that prove the result. This guide takes you from
+                signup to a running production setup in about ten minutes.
+              </p>
+            </div>
+          
 
             <div className={s.docSection} id="quickstart">
               <h2 className="h-2">Quickstart</h2>
@@ -209,7 +207,11 @@ POST   /webhooks           subscribe to the event stream`}</pre>
                 technically, and architecturally. Workspaces are isolated;
                 data is exportable and deletable on demand. We process data
                 under a standard DPA with EU SCCs, and publish a subprocessor
-                list we actively minimize.
+                list we actively minimize. The full policy lives on the{" "}
+                <Link href="/privacy" className={s.docLink}>
+                  privacy page
+                </Link>
+                .
               </p>
             </div>
 
@@ -220,8 +222,11 @@ POST   /webhooks           subscribe to the event stream`}</pre>
                 MSA. You own your workspace data and the outputs your agents
                 produce for you; we own the platform. Fair-use applies to the
                 free tier; uptime commitments and remedies are spelled out in
-                the Scale SLA. Full text available on request from the{" "}
-                <Link href="/contact" style={{ color: "var(--accent)" }}>contact page</Link>.
+                the Scale SLA. Read the full text on the{" "}
+                <Link href="/terms" className={s.docLink}>
+                  terms page
+                </Link>
+                .
               </p>
             </div>
           </div>

@@ -6,8 +6,11 @@ hairline borders, restrained motion, and fully rendered product UI.
 No gradients-as-personality, no glass-everything, no filler.
 
 Built with **Next.js 15 (App Router) · TypeScript · CSS Modules**. One
-runtime dependency set (`next`, `react`, `react-dom`) — charts, icons,
-accordions, and the command palette are all hand-rolled.
+runtime dependency set (`next`, `react`, `react-dom`) — charts,
+accordions, and the command palette are all hand-rolled. UI icons and
+brand marks are vendored verbatim into `components/icons.tsx` from
+official sources: [Lucide](https://lucide.dev) (ISC) for UI icons and
+[Simple Icons](https://simpleicons.org) (CC0) for brand marks.
 
 ## Quick start
 
@@ -41,7 +44,9 @@ npm start          # serve the production build
 | `/dashboard/analytics` | 7d/30d/90d switching, donut, per-agent performance |
 | `/dashboard/settings` | Workspace, appearance, notifications, security, API keys, billing |
 
-Press **⌘K / Ctrl-K** anywhere in the dashboard for the command palette.
+Press **⌘K / Ctrl-K** anywhere in the dashboard for the command palette —
+or jump with **G** then **O/A/W/N/S** (Overview, Agents, Workflows,
+Numbers, Settings), just like the palette hints say.
 
 ## Theming
 
@@ -51,7 +56,10 @@ Light, dark, and system themes ship site-wide.
   `<html>`. Light values live on `:root` in `app/globals.css`; every dark
   value lives in the single `[data-theme="dark"], .dark` block. An inline
   script in `app/layout.tsx` paints the stored choice before first paint,
-  so there is no flash.
+  so there is no flash. Switching themes cross-fades over ~400ms
+  (`.theme-switching` on `<html>`), and the cut is instant for
+  reduced-motion users. Secondary inks and status hues pass WCAG AA in
+  both palettes (plus a `prefers-contrast: more` boost).
 - **Where users switch it** — marketing navbar, dashboard topbar,
   Settings → Appearance, and the command palette ("dark", "light", "auto").
   The choice persists in `localStorage` under `nova-theme`.

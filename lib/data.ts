@@ -404,6 +404,54 @@ export const activityFeed = [
   { who: "Research Agent", what: "Delivered competitive brief to Growth", when: "1 hour ago", kind: "agent" },
 ];
 
+/* ---------------- Notifications ---------------- */
+
+export type NotificationKind = "approval" | "success" | "alert" | "info";
+export type Notification = {
+  id: string;
+  kind: NotificationKind;
+  title: string;
+  body: string;
+  time: string;
+  unread: boolean;
+};
+
+export const notifications: Notification[] = [
+  {
+    id: "n1",
+    kind: "approval",
+    title: "Sales Agent needs approval",
+    body: "Outreach sequence for Meridian is waiting — 4 emails drafted, review before 5pm.",
+    time: "9 min ago",
+    unread: true,
+  },
+  {
+    id: "n2",
+    kind: "alert",
+    title: "Churn-risk alert to CSM is paused",
+    body: "The automation failed twice overnight after the HubSpot scope change.",
+    time: "1 hour ago",
+    unread: true,
+  },
+  {
+    id: "n3",
+    kind: "success",
+    title: "Weekly report delivered",
+    body: "Data Agent posted the anomalies report to #data — 3 insights flagged.",
+    time: "32 min ago",
+    unread: true,
+  },
+  {
+    id: "n4",
+    kind: "info",
+    title: "NOVA 2.5 is out",
+    body: "Official icon set, WCAG AA contrast, and smooth theme switching. Read the changelog.",
+    time: "2 hours ago",
+    unread: false,
+  },
+];
+
+
 /* ---------------- Changelog ---------------- */
 
 export type ChangeKind = "New" | "Improved" | "Fixed";
@@ -415,6 +463,61 @@ export type ChangelogEntry = {
 };
 
 export const changelog: ChangelogEntry[] = [
+  {
+    version: "2.8.0",
+    date: "August 22, 2026",
+    title: "Faster first paint",
+    items: [
+      { kind: "Improved", text: "Page heroes now paint with the HTML — no more waiting for JavaScript hydration to reveal the headline. Largest Contentful Paint dropped by roughly a second on throttled mobile connections across the site." },
+      { kind: "Improved", text: "Verified with Lighthouse: performance 90–98, accessibility 100, best practices 100, and SEO 100 across the main pages (the dashboard is deliberately noindex — it's a signed-in surface)." },
+      { kind: "Fixed", text: "The dashboard Overview had no page title of its own — browser tabs now read “Overview — NOVA”." },
+    ],
+  },
+  {
+    version: "2.7.0",
+    date: "August 22, 2026",
+    title: "The accessibility pass",
+    items: [
+      { kind: "Improved", text: "A full WCAG audit with a real screen-reader rules engine, in both themes, on every page. Every serious finding is fixed: status chips, sidebar hints, and the dashboard search field now clear AA with room to spare." },
+      { kind: "Improved", text: "Inline links in legal and docs pages now underline — no more spotting them by color alone — and comparison-table checkmarks carry screen-reader text instead of illegal aria-labels." },
+      { kind: "Fixed", text: "Heading outline repaired: plan names, footer columns, and the auth pages' missing main landmark no longer skip levels or float outside landmarks." },
+      { kind: "Improved", text: "FAQ accordion panels are properly labelled regions for assistive tech." },
+    ],
+  },
+  {
+    version: "2.6.1",
+    date: "August 22, 2026",
+    title: "Small screens, sharp edges",
+    items: [
+      { kind: "Fixed", text: "The docs sidebar no longer stretches the page sideways on phones — links reflow into pills inside the viewport." },
+      { kind: "Fixed", text: "The integrations grid on the Features page shrinks gracefully on small screens instead of poking out past the edge." },
+      { kind: "Fixed", text: "No more horizontal scrollbar flash while fonts or charts settle in — the page clips instead of wobbling." },
+      { kind: "New", text: "Keyboard sequences from the command palette hints actually work now: G then O/A/W/N/S jumps straight between dashboard pages." },
+      { kind: "Fixed", text: "\u201CForgot password?\u201D on the login screen is no longer a link to itself — it sends a (simulated) reset link, and tells you when the email field is empty." },
+    ],
+  },
+  {
+    version: "2.6.0",
+    date: "August 22, 2026",
+    title: "Terms, privacy, and the notification center",
+    items: [
+      { kind: "New", text: "Full Terms of Service and Privacy Policy, written in plain English and linked from the footer, signup, and docs — no more 'available on request'." },
+      { kind: "New", text: "The dashboard bell is now a real notification center: approvals, alerts, and deliveries in one popover, with mark-all-read and per-item dismiss." },
+      { kind: "Improved", text: "Every interactive element was click-tested end to end — filters, switches, forms, SSO buttons, and the command palette all respond." },
+    ],
+  },
+  {
+    version: "2.5.0",
+    date: "August 22, 2026",
+    title: "The visual refresh",
+    items: [
+      { kind: "Improved", text: "Every icon in the product and on the website now comes from official sources — Lucide for interface icons, Simple Icons for integrations and brand marks. No more approximated glyphs." },
+      { kind: "Improved", text: "Dark mode got a full contrast pass: secondary text, status colors, and console panels now meet WCAG AA in both light and dark themes." },
+      { kind: "New", text: "Switching themes now cross-fades smoothly instead of hard-cutting — and it politely steps aside if you prefer reduced motion." },
+      { kind: "New", text: "The homepage hero has a soft theme-aware aurora backdrop, and link previews (Open Graph) ship a proper branded card." },
+      { kind: "Fixed", text: "Autofilled form fields no longer flash a pale yellow or blue box that clashes with dark mode." },
+    ],
+  },
   {
     version: "2.4.0",
     date: "August 11, 2026",

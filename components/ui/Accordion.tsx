@@ -20,6 +20,7 @@ export default function Accordion({
             <h3 className={styles.heading}>
               <button
                 className={styles.trigger}
+                id={`faq-trigger-${i}`}
                 aria-expanded={open}
                 aria-controls={`faq-panel-${i}`}
                 onClick={() => setOpenIdx(open ? null : i)}
@@ -30,7 +31,12 @@ export default function Accordion({
                 </span>
               </button>
             </h3>
-            <div id={`faq-panel-${i}`} role="region" className={styles.panel}>
+            <div
+              id={`faq-panel-${i}`}
+              role="region"
+              aria-labelledby={`faq-trigger-${i}`}
+              className={styles.panel}
+            >
               <div className={styles.panelInner}>
                 <p className={styles.answer}>{item.a}</p>
               </div>

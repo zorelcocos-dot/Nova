@@ -16,9 +16,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/login",
     "/signup",
+    "/terms",
+    "/privacy",
   ].map((p) => ({
     url: `${base}${p}`,
-    lastModified: new Date("2026-08-11"),
+    lastModified: new Date("2026-08-22"),
   }));
 
   const postPages = posts.map((p) => ({
