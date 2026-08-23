@@ -9,6 +9,12 @@ import AgentCards from "@/components/mock/AgentCards";
 import ConsolePanel from "@/components/mock/ConsolePanel";
 import { AreaChart, Donut } from "@/components/charts";
 import CountUp from "@/components/CountUp";
+import TextReveal from "@/components/motion/TextReveal";
+import Marquee from "@/components/motion/Marquee";
+import Magnetic from "@/components/motion/Magnetic";
+import Parallax from "@/components/motion/Parallax";
+import Tilt from "@/components/motion/Tilt";
+import MouseGlow from "@/components/motion/MouseGlow";
 import {
   IconChevronRight,
   IconAgent,
@@ -17,6 +23,7 @@ import {
   IconUsers,
   IconBolt,
   IconCheck,
+  LogoMark,
   brandIcons,
 } from "@/components/icons";
 import { trustedCompanies, testimonials, integrations, faqs, agents } from "@/lib/data";
@@ -31,20 +38,29 @@ const logoStyleKey: Record<string, string> = {
   mono: h.lmono,
 };
 
+/** Words for the full-bleed marquee band; odd indices render outlined. */
+const bandWords = ["Automate", "Ship", "Measure", "Repeat"];
+
 export default function HomePage() {
   return (
     <>
       {/* 1 — Hero */}
       <section className={h.hero}>
+        <MouseGlow className={h.heroGlow} size={680} />
         <div className="container">
-          <div className={h.heroInner}>
+          <div className={`${h.heroInner} hero-stagger`}>
             <Link href="/blog/introducing-nova-ai-2" className={h.heroLabel}>
               <span className={`dot ${h.heroDot}`} />
               Introducing NOVA AI 2.0
               <IconChevronRight size={14} />
             </Link>
             <h1 className={`h-display ${h.heroTitle}`}>
-              Your work, automated&nbsp;by&nbsp;AI.
+              <TextReveal
+                waitReady
+                by="word"
+                stagger={70}
+                text="Your work, automated by AI."
+              />
             </h1>
             <p className={`lead ${h.heroSub}`}>
               NOVA is the AI productivity platform that plans, executes, and
@@ -52,9 +68,11 @@ export default function HomePage() {
               that matters.
             </p>
             <div className={h.heroCtas}>
-              <Link href="/signup" className="btn btn-primary btn-lg">
-                Start building free
-              </Link>
+              <Magnetic>
+                <Link href="/signup" className="btn btn-primary btn-lg">
+                  Start building free
+                </Link>
+              </Magnetic>
               <Link href="/features" className="link-arrow" style={{ fontSize: 16 }}>
                 See how it works <IconChevronRight size={16} />
               </Link>
@@ -65,7 +83,11 @@ export default function HomePage() {
             <div className={h.heroVisual}>
               <div className={h.heroMat} aria-hidden />
               <div className={h.heroVisualInner}>
-                <ProductApp />
+                <Parallax speed={0.05}>
+                  <Tilt max={3}>
+                    <ProductApp />
+                  </Tilt>
+                </Parallax>
               </div>
             </div>
           </Reveal>
@@ -75,7 +97,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2 — Trusted companies */}
+      {/* 2 — Trusted companies (infinite logo marquee) */}
       <section className={h.trusted}>
         <div className="container">
           <Reveal>
@@ -83,16 +105,16 @@ export default function HomePage() {
               Trusted by operations teams at 4,000+ companies
             </p>
           </Reveal>
-          <div className={h.logoRow}>
-            {trustedCompanies.map((c, i) => (
-              <Reveal key={c.name} delay={120 + i * 45} as="span">
-                <span className={`${h.logoWord} ${logoStyleKey[c.style]}`}>
-                  {c.name}
-                </span>
-              </Reveal>
-            ))}
-          </div>
         </div>
+        <Marquee speed={38} className={h.logoMarquee}>
+          {trustedCompanies.map((c) => (
+            <span key={c.name} className={h.logoItem}>
+              <span className={`${h.logoWord} ${logoStyleKey[c.style]}`}>
+                {c.name}
+              </span>
+            </span>
+          ))}
+        </Marquee>
       </section>
 
       {/* 3 — Large product showcase */}
@@ -101,7 +123,9 @@ export default function HomePage() {
           <div className={h.splitHead}>
             <Reveal>
               <p className="eyebrow">The command center</p>
-              <h2 className="h-1">One workspace. Every outcome.</h2>
+              <h2 className="h-1">
+                <TextReveal text="One workspace. Every outcome." />
+              </h2>
             </Reveal>
             <Reveal delay={90}>
               <p className="lead">
@@ -197,7 +221,7 @@ export default function HomePage() {
           <Reveal className={h.splitCopy}>
             <p className="eyebrow">Workflow automation</p>
             <h2 className="h-1" style={{ marginTop: 16 }}>
-              Describe the outcome. NOVA handles the rest.
+              <TextReveal text="Describe the outcome. NOVA handles the rest." />
             </h2>
             <p className="lead">
               Write automations the way you&rsquo;d explain them to a colleague.
@@ -255,7 +279,7 @@ export default function HomePage() {
             <Reveal>
               <p className="eyebrow" style={{ color: "var(--ink-3)" }}>The engine</p>
               <h2 className="h-1" style={{ marginTop: 16 }}>
-                Reliable enough to run the company on.
+                <TextReveal text="Reliable enough to run the company on." />
               </h2>
             </Reveal>
             <Reveal delay={90}>
@@ -311,7 +335,7 @@ export default function HomePage() {
             <Reveal>
               <p className="eyebrow">Workflow builder</p>
               <h2 className="h-1" style={{ marginTop: 16 }}>
-                Logic you can see at a glance.
+                <TextReveal text="Logic you can see at a glance." />
               </h2>
             </Reveal>
             <Reveal delay={90}>
@@ -333,7 +357,9 @@ export default function HomePage() {
           <div className={h.splitHead}>
             <Reveal>
               <p className="eyebrow">AI agents</p>
-              <h2 className="h-1">Four colleagues who never sleep.</h2>
+              <h2 className="h-1">
+                <TextReveal text="Four colleagues who never sleep." />
+              </h2>
             </Reveal>
             <Reveal delay={90}>
               <p className="lead">
@@ -353,7 +379,7 @@ export default function HomePage() {
             <Reveal>
               <p className="eyebrow">Integrations</p>
               <h2 className="h-1" style={{ marginTop: 16 }}>
-                Plays well with everything you use.
+                <TextReveal text="Plays well with everything you use." />
               </h2>
             </Reveal>
             <Reveal delay={90}>
@@ -445,7 +471,7 @@ export default function HomePage() {
           <Reveal delay={120} className={h.splitCopy}>
             <p className="eyebrow">Smart analytics</p>
             <h2 className="h-1" style={{ marginTop: 16 }}>
-              Prove the value. Don&rsquo;t assert it.
+              <TextReveal text="Prove the value. Don’t assert it." />
             </h2>
             <p className="lead">
               Every hour an agent saves is measured against real baselines —
@@ -534,7 +560,7 @@ export default function HomePage() {
             <Reveal>
               <p className="eyebrow">Pricing</p>
               <h2 className="h-1" style={{ marginTop: 16 }}>
-                Starts free. Scales honestly.
+                <TextReveal text="Starts free. Scales honestly." />
               </h2>
             </Reveal>
             <Reveal delay={90}>
@@ -556,7 +582,7 @@ export default function HomePage() {
           <Reveal className={h.faqSide}>
             <p className="eyebrow">FAQ</p>
             <h2 className="h-2" style={{ marginTop: 16 }}>
-              Answers, without the runaround.
+              <TextReveal text="Answers, without the runaround." />
             </h2>
             <p className="lead" style={{ fontSize: "1.06rem" }}>
               Everything teams usually ask before they trust agents with real
@@ -572,26 +598,48 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 13 — Final CTA */}
+      {/* 13 — Giant marquee band */}
+      <section className={h.giant} aria-hidden="true">
+        <Marquee speed={30}>
+          {bandWords.flatMap((w, i) => [
+            <span
+              key={`${w}-word`}
+              className={`${h.giantWord} ${i % 2 === 1 ? h.giantOutline : ""}`}
+            >
+              {w}
+            </span>,
+            <span key={`${w}-sep`} className={h.giantSep}>
+              <LogoMark size={44} />
+            </span>,
+          ])}
+        </Marquee>
+      </section>
+
+      {/* 14 — Final CTA */}
       <section className={h.ctaSection}>
         <div className="container">
           <Reveal>
             <div className={h.ctaPanel}>
+              <MouseGlow className={h.ctaGlow} size={560} light />
               <p className={`eyebrow ${h.ctaEyebrow}`}>Start today</p>
               <h2 className={`h-1 ${h.ctaTitle}`}>
-                Automate the work that slows you down.
+                <TextReveal text="Automate the work that slows you down." />
               </h2>
               <p className={h.ctaSub}>
                 Deploy your first agent in minutes. Free up the hours your team
                 didn&rsquo;t realize it was losing.
               </p>
               <div className={h.ctaBtns}>
-                <Link href="/signup" className={`btn btn-lg ${h.ctaBtnLight}`}>
-                  Start building free
-                </Link>
-                <Link href="/pricing" className={`btn btn-lg ${h.ctaBtnGhost}`}>
-                  Compare plans
-                </Link>
+                <Magnetic>
+                  <Link href="/signup" className={`btn btn-lg ${h.ctaBtnLight}`}>
+                    Start building free
+                  </Link>
+                </Magnetic>
+                <Magnetic>
+                  <Link href="/pricing" className={`btn btn-lg ${h.ctaBtnGhost}`}>
+                    Compare plans
+                  </Link>
+                </Magnetic>
               </div>
               <p className={h.ctaNote}>Free plan &middot; No credit card required &middot; Cancel anytime</p>
             </div>

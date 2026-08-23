@@ -1,0 +1,82 @@
+/* ============================================================
+   Motion layer — text reveals, marquees
+   ============================================================ */
+
+/* ---------- Split-text masked reveal ---------- */
+.tr {
+  display: inline;
+}
+.trMask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Compensate for descenders so g/p/y never clip in the mask.
+     The negative margin cancels the padding so line height is
+     unaffected. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.trItem {
+  display: inline-block;
+  transform: translateY(118%);
+  transition: transform 0.85s var(--ease-out);
+  will-change: transform;
+}
+.trIn .trItem {
+  transform: translateY(0);
+}
+
+/* ---------- Seamless marquee ---------- */
+.marquee {
+  overflow: hidden;
+  display: flex;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+}
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: mqMove var(--mq, 40s) linear infinite;
+}
+.marquee:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+.marqueeGroup {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+@keyframes mqMove {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trItem {
+    transition: none;
+    transform: none;
+  }
+  .marqueeTrack {
+    animation: none;
+  }
+}
+[data-motion="reduce"] .trItem {
+  transition: none !important;
+  transform: none !important;
+}
+[data-motion="reduce"] .marqueeTrack {
+  animation: none !important;
+}
