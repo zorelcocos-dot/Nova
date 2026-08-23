@@ -15,6 +15,7 @@ import Magnetic from "@/components/motion/Magnetic";
 import Parallax from "@/components/motion/Parallax";
 import Tilt from "@/components/motion/Tilt";
 import MouseGlow from "@/components/motion/MouseGlow";
+import ScrambleText from "@/components/motion/ScrambleText";
 import {
   IconChevronRight,
   IconAgent,
@@ -51,7 +52,7 @@ export default function HomePage() {
           <div className={`${h.heroInner} hero-stagger`}>
             <Link href="/blog/introducing-nova-ai-2" className={h.heroLabel}>
               <span className={`dot ${h.heroDot}`} />
-              Introducing NOVA AI 2.0
+              <ScrambleText waitReady text="Introducing NOVA AI 2.0" delay={450} />
               <IconChevronRight size={14} />
             </Link>
             <h1 className={`h-display ${h.heroTitle}`}>
@@ -277,7 +278,9 @@ export default function HomePage() {
         <div className="container">
           <div className="section-header center" style={{ marginBottom: 56 }}>
             <Reveal>
-              <p className="eyebrow" style={{ color: "var(--ink-3)" }}>The engine</p>
+              <p className="eyebrow" style={{ color: "var(--ink-3)" }}>
+                <ScrambleText text="The engine" />
+              </p>
               <h2 className="h-1" style={{ marginTop: 16 }}>
                 <TextReveal text="Reliable enough to run the company on." />
               </h2>
@@ -314,8 +317,8 @@ export default function HomePage() {
                 s: "Impact thresholds route sensitive actions to the right person, with the context to decide fast.",
               },
             ].map((f, i) => (
-              <Reveal key={f.t} delay={i * 80}>
-                <div className={h.darkFeat}>
+                <Reveal key={f.t} delay={i * 80}>
+                <div className={h.darkFeat} data-spotlight>
                   <div className={h.darkFeatIcon}>
                     <f.icon size={16} />
                   </div>
@@ -395,7 +398,7 @@ export default function HomePage() {
               const BrandIcon = brandIcons[tool.id];
               return (
                 <Reveal key={tool.id} delay={(i % 4) * 60}>
-                  <div className={m.intTile}>
+                  <div className={m.intTile} data-spotlight>
                     <div className={m.intIcon}>
                       <BrandIcon size={19} />
                     </div>
@@ -520,32 +523,36 @@ export default function HomePage() {
             <div className={h.quoteGapCol}>
               {testimonials.slice(1, 3).map((t, i) => (
                 <Reveal key={t.name} delay={i * 80}>
-                  <figure className={h.quoteCard}>
-                    <blockquote className={h.quoteText}>&ldquo;{t.quote}&rdquo;</blockquote>
-                    <figcaption className={h.quoteFoot}>
-                      <div className={`${h.av} ${h.avSm} ${h.avSoft}`}>{t.initials}</div>
-                      <div>
-                        <div className={h.quoteName}>{t.name}</div>
-                        <div className={h.quoteRole}>{t.role}, {t.company}</div>
-                      </div>
-                    </figcaption>
-                  </figure>
+                  <Tilt max={2.2} scale={1.006} className={h.quoteTilt}>
+                    <figure className={h.quoteCard}>
+                      <blockquote className={h.quoteText}>&ldquo;{t.quote}&rdquo;</blockquote>
+                      <figcaption className={h.quoteFoot}>
+                        <div className={`${h.av} ${h.avSm} ${h.avSoft}`}>{t.initials}</div>
+                        <div>
+                          <div className={h.quoteName}>{t.name}</div>
+                          <div className={h.quoteRole}>{t.role}, {t.company}</div>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </Tilt>
                 </Reveal>
               ))}
             </div>
             <div className={h.quoteGapCol}>
               {testimonials.slice(3, 5).map((t, i) => (
                 <Reveal key={t.name} delay={i * 80 + 60}>
-                  <figure className={h.quoteCard}>
-                    <blockquote className={h.quoteText}>&ldquo;{t.quote}&rdquo;</blockquote>
-                    <figcaption className={h.quoteFoot}>
-                      <div className={`${h.av} ${h.avSm} ${h.avSoft}`}>{t.initials}</div>
-                      <div>
-                        <div className={h.quoteName}>{t.name}</div>
-                        <div className={h.quoteRole}>{t.role}, {t.company}</div>
-                      </div>
-                    </figcaption>
-                  </figure>
+                  <Tilt max={2.2} scale={1.006} className={h.quoteTilt}>
+                    <figure className={h.quoteCard}>
+                      <blockquote className={h.quoteText}>&ldquo;{t.quote}&rdquo;</blockquote>
+                      <figcaption className={h.quoteFoot}>
+                        <div className={`${h.av} ${h.avSm} ${h.avSoft}`}>{t.initials}</div>
+                        <div>
+                          <div className={h.quoteName}>{t.name}</div>
+                          <div className={h.quoteRole}>{t.role}, {t.company}</div>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </Tilt>
                 </Reveal>
               ))}
             </div>
@@ -571,7 +578,7 @@ export default function HomePage() {
             </Reveal>
           </div>
           <Reveal>
-            <Pricing />
+            <Pricing spotlight />
           </Reveal>
         </div>
       </section>
@@ -621,7 +628,9 @@ export default function HomePage() {
           <Reveal>
             <div className={h.ctaPanel}>
               <MouseGlow className={h.ctaGlow} size={560} light />
-              <p className={`eyebrow ${h.ctaEyebrow}`}>Start today</p>
+              <p className={`eyebrow ${h.ctaEyebrow}`}>
+                <ScrambleText text="Start today" />
+              </p>
               <h2 className={`h-1 ${h.ctaTitle}`}>
                 <TextReveal text="Automate the work that slows you down." />
               </h2>

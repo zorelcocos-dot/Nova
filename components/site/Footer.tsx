@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { LogoMark } from "@/components/icons";
+import TextReveal from "@/components/motion/TextReveal";
+import Parallax from "@/components/motion/Parallax";
 import styles from "./footer.module.css";
 
 const columns: { title: string; links: { label: string; href: string }[] }[] = [
@@ -35,6 +37,16 @@ const columns: { title: string; links: { label: string; href: string }[] }[] = [
 export default function Footer() {
   return (
     <footer className={styles.footer}>
+      {/* Giant typographic sign-off — chars decode in as it scrolls up,
+          drifting slightly against the page (parallax). */}
+      <div className={styles.giantWrap} aria-hidden="true">
+        <Parallax speed={0.08}>
+          <div className={styles.giantWord}>
+            <TextReveal by="char" stagger={55} text="NOVA" />
+          </div>
+        </Parallax>
+      </div>
+
       <div className={`container ${styles.top}`}>
         <div className={styles.brandCol}>
           <Link href="/" className={styles.brand} aria-label="NOVA home">

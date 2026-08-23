@@ -947,6 +947,69 @@ html.js[data-ready] .hero-stagger > *:nth-child(5) {
   animation: none !important;
 }
 
+/* ---------- Smooth scroll (motion layer) ----------
+   JS (components/motion/SmoothScroll) owns the easing while it runs;
+   native smooth scrolling must not fight it. */
+html.smooth-scroll {
+  scroll-behavior: auto !important;
+}
+
+/* ---------- Cursor spotlight (motion layer) ----------
+   Elements tagged [data-spotlight] get a soft halo that trails the
+   pointer; coordinates arrive as --spot-x/--spot-y from the delegated
+   Spotlight component. currentColor-based so light, dark and inverted
+   cards all get a tint that belongs to them. */
+[data-spotlight] {
+  position: relative;
+}
+[data-spotlight]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--spot-on, 0);
+  transition: opacity 0.45s var(--ease);
+  background: radial-gradient(
+    280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, currentColor 9%, transparent),
+    transparent 68%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-spotlight]::after {
+    display: none;
+  }
+}
+[data-motion="reduce"] [data-spotlight]::after {
+  display: none;
+}
+
+/* ---------- Film grain (motion layer) ----------
+   One fixed noise sheet above page content, below chrome (nav z-100).
+   Cheap: a 160px SVG turbulence tile, no filters at runtime. */
+:root {
+  --grain-opacity: 0.05;
+}
+[data-theme="dark"] {
+  --grain-opacity: 0.07;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --grain-opacity: 0;
+  }
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
@@ -973,14 +1036,17 @@ html.js[data-ready] .hero-stagger > *:nth-child(5) {
     filter 0.9s var(--ease-out);
 }
 
-/* ---------- Page transition ---------- */
+/* ---------- Page transition ----------
+   Route changes settle with a soft rise + micro-zoom — a quiet curtain
+   for client-side navigation (the brand curtain stays reserved for the
+   first load). */
 .page-enter {
-  animation: pageIn 0.45s var(--ease-out) both;
+  animation: pageIn 0.55s var(--ease-out) both;
 }
 @keyframes pageIn {
   from {
     opacity: 0;
-    transform: translateY(7px);
+    transform: translateY(14px) scale(0.995);
   }
   to {
     opacity: 1;

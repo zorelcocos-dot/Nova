@@ -77,7 +77,7 @@ export default function PricingPage() {
 
       <div className="container">
         <Reveal>
-          <Pricing />
+          <Pricing spotlight />
         </Reveal>
       </div>
 

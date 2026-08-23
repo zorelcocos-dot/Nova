@@ -3,6 +3,8 @@ import ThemeProvider, { themeScript } from "@/components/ThemeProvider";
 import ToastProvider from "@/components/ui/Toast";
 import Preloader from "@/components/motion/Preloader";
 import Cursor from "@/components/motion/Cursor";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+import Spotlight from "@/components/motion/Spotlight";
 import "./globals.css";
 
 /**
@@ -86,9 +88,12 @@ export default function RootLayout({
         <ThemeProvider>
           <ToastProvider>{children}</ToastProvider>
         </ThemeProvider>
-        {/* Motion layer — brand curtain once per session, custom cursor */}
+        {/* Motion layer — brand curtain once per session, custom cursor,
+            smooth scroll, cursor spotlight */}
         <Preloader />
         <Cursor />
+        <SmoothScroll />
+        <Spotlight />
       </body>
     </html>
   );

@@ -505,6 +505,9 @@
 .quoteGapCol:nth-child(2) {
   margin-top: 40px;
 }
+.quoteTilt {
+  border-radius: var(--r-xl);
+}
 .quoteCard {
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
