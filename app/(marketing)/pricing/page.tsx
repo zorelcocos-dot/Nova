@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import TextReveal from "@/components/motion/TextReveal";
 import Pricing from "@/components/site/Pricing";
 import Accordion from "@/components/ui/Accordion";
 import { IconCheck } from "@/components/icons";
@@ -62,7 +63,9 @@ export default function PricingPage() {
         <div className="container">
           <div className={s.pageHeroInner}>
                         <p className="eyebrow">Pricing</p>
-            <h1 className="h-1">Pricing that stays out of the way.</h1>
+            <h1 className="h-1">
+              <TextReveal waitReady text="Pricing that stays out of the way." />
+            </h1>
             <p className="lead">
               Start free. Pay for outcomes as you scale. No seat traps, no
               surprise invoices, no call required to find out the price.
@@ -74,7 +77,7 @@ export default function PricingPage() {
 
       <div className="container">
         <Reveal>
-          <Pricing />
+          <Pricing spotlight />
         </Reveal>
       </div>
 

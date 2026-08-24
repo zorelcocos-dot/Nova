@@ -1,6 +1,23 @@
 .footer {
   border-top: 1px solid var(--line);
   background: var(--bg);
+  overflow: hidden;
+}
+
+/* ---------- Giant wordmark sign-off ---------- */
+.giantWrap {
+  padding-top: clamp(8px, 1.5vw, 18px);
+}
+.giantWord {
+  font-size: clamp(72px, 21vw, 252px);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+  text-align: center;
+  color: var(--ink);
+  opacity: 0.94;
+  user-select: none;
+  white-space: nowrap;
 }
 
 .top {

@@ -6,7 +6,7 @@ import { IconCheck } from "@/components/icons";
 import { plans } from "@/lib/data";
 import styles from "./pricing.module.css";
 
-export default function Pricing() {
+export default function Pricing({ spotlight = false }: { spotlight?: boolean }) {
   const [yearly, setYearly] = useState(true);
 
   return (
@@ -46,6 +46,7 @@ export default function Pricing() {
             <article
               key={plan.id}
               className={`${styles.card} ${plan.featured ? styles.featured : ""}`}
+              data-spotlight={spotlight ? "" : undefined}
             >
               {plan.featured && (
                 <span className={styles.featuredChip}>Most popular</span>

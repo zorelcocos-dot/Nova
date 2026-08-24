@@ -795,6 +795,221 @@ a .chip {
   letter-spacing: 0;
 }
 
+/* ---------- Custom cursor (motion layer) ----------
+   Difference-blended so the white dot/ring invert over any surface.
+   The element is painted at 0,0 and translated to the pointer by JS. */
+.cur-dot,
+.cur-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  pointer-events: none;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  opacity: 0;
+  will-change: transform;
+}
+.cur-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #fff;
+  transition: opacity 0.25s var(--ease);
+}
+.cur-ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1.5px solid #fff;
+  transition:
+    opacity 0.3s var(--ease),
+    width 0.28s var(--ease),
+    height 0.28s var(--ease),
+    margin 0.28s var(--ease);
+}
+html.cur-hover .cur-ring {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+}
+html.cur-down .cur-ring {
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+}
+/* Only hide the native cursor while the custom one is actually mounted */
+html.nova-cursor,
+html.nova-cursor * {
+  cursor: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cur-dot,
+  .cur-ring {
+    display: none;
+  }
+}
+
+/* ---------- Mouse glow pool (motion layer) ----------
+   A soft radial light that trails the pointer inside a positioned,
+   overflow-hidden parent. Theme-aware via --glow-c. */
+:root {
+  --hero-glow: rgba(0, 102, 204, 0.13);
+}
+[data-theme="dark"],
+.dark {
+  --hero-glow: rgba(41, 151, 255, 0.2);
+}
+.glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  /* Wide soft falloff in the gradient itself — no blur filter, so the
+     per-frame transform stays cheap. */
+  background: radial-gradient(
+    closest-side,
+    var(--glow-c, var(--hero-glow)) 0%,
+    color-mix(in srgb, var(--glow-c, var(--hero-glow)) 45%, transparent) 42%,
+    transparent 72%
+  );
+  transition: opacity 0.5s var(--ease);
+  will-change: transform;
+}
+/* Repeat visits: the inline head script has already flagged the preloader
+   as done before first paint — hide the SSR'd curtain instantly, no flash. */
+html[data-preload="done"] .nova-preloader {
+  display: none;
+}
+.glow-light {
+  --glow-c: rgba(255, 255, 255, 0.15);
+}
+
+/* ---------- Scroll progress (motion layer) ---------- */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* ---------- Hero entrance (motion layer) ----------
+   Gated two ways: `html.js` (the inline head script tags the document as
+   JS-capable before first paint, so no-SSR/JS users never see hidden
+   content) and `html[data-ready]` (the preloader flips it as the curtain
+   lifts, so the sequence plays on top of the reveal, not under it). */
+html.js .hero-stagger > * {
+  opacity: 0;
+}
+html.js[data-ready] .hero-stagger > * {
+  animation: heroRise 0.9s var(--ease-out) both;
+}
+html.js[data-ready] .hero-stagger > *:nth-child(1) {
+  animation-delay: 0.16s;
+}
+html.js[data-ready] .hero-stagger > *:nth-child(2) {
+  animation-delay: 0.24s;
+}
+html.js[data-ready] .hero-stagger > *:nth-child(3) {
+  animation-delay: 0.34s;
+}
+html.js[data-ready] .hero-stagger > *:nth-child(4) {
+  animation-delay: 0.44s;
+}
+html.js[data-ready] .hero-stagger > *:nth-child(5) {
+  animation-delay: 0.54s;
+}
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .hero-stagger > * {
+    opacity: 1;
+    animation: none;
+  }
+}
+[data-motion="reduce"] .hero-stagger > * {
+  opacity: 1 !important;
+  animation: none !important;
+}
+
+/* ---------- Smooth scroll (motion layer) ----------
+   JS (components/motion/SmoothScroll) owns the easing while it runs;
+   native smooth scrolling must not fight it. */
+html.smooth-scroll {
+  scroll-behavior: auto !important;
+}
+
+/* ---------- Cursor spotlight (motion layer) ----------
+   Elements tagged [data-spotlight] get a soft halo that trails the
+   pointer; coordinates arrive as --spot-x/--spot-y from the delegated
+   Spotlight component. currentColor-based so light, dark and inverted
+   cards all get a tint that belongs to them. */
+[data-spotlight] {
+  position: relative;
+}
+[data-spotlight]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--spot-on, 0);
+  transition: opacity 0.45s var(--ease);
+  background: radial-gradient(
+    280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, currentColor 9%, transparent),
+    transparent 68%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-spotlight]::after {
+    display: none;
+  }
+}
+[data-motion="reduce"] [data-spotlight]::after {
+  display: none;
+}
+
+/* ---------- Film grain (motion layer) ----------
+   One fixed noise sheet above page content, below chrome (nav z-100).
+   Cheap: a 160px SVG turbulence tile, no filters at runtime. */
+:root {
+  --grain-opacity: 0.05;
+}
+[data-theme="dark"] {
+  --grain-opacity: 0.07;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --grain-opacity: 0;
+  }
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
@@ -821,14 +1036,17 @@ a .chip {
     filter 0.9s var(--ease-out);
 }
 
-/* ---------- Page transition ---------- */
+/* ---------- Page transition ----------
+   Route changes settle with a soft rise + micro-zoom — a quiet curtain
+   for client-side navigation (the brand curtain stays reserved for the
+   first load). */
 .page-enter {
-  animation: pageIn 0.45s var(--ease-out) both;
+  animation: pageIn 0.55s var(--ease-out) both;
 }
 @keyframes pageIn {
   from {
     opacity: 0;
-    transform: translateY(7px);
+    transform: translateY(14px) scale(0.995);
   }
   to {
     opacity: 1;

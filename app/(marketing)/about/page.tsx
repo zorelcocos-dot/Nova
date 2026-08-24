@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import TextReveal from "@/components/motion/TextReveal";
 import CountUp from "@/components/CountUp";
 import s from "../sub.module.css";
 
@@ -48,7 +49,10 @@ export default function AboutPage() {
           <div className={s.pageHeroInner} style={{ maxWidth: 860 }}>
                         <p className="eyebrow">About NOVA</p>
             <h1 className="h-1">
-              Work is for judgment. Logistics are for machines.
+              <TextReveal
+                waitReady
+                text="Work is for judgment. Logistics are for machines."
+              />
             </h1>
             <p className="lead">
               We started NOVA because the average knowledge worker spends

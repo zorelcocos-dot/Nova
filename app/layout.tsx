@@ -1,7 +1,22 @@
 import type { Metadata, Viewport } from "next";
 import ThemeProvider, { themeScript } from "@/components/ThemeProvider";
 import ToastProvider from "@/components/ui/Toast";
+import Preloader from "@/components/motion/Preloader";
+import Cursor from "@/components/motion/Cursor";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+import Spotlight from "@/components/motion/Spotlight";
 import "./globals.css";
+
+/**
+ * Painted before first paint, right after the theme script (which already
+ * knows the reduce-motion preference):
+ *  - tags the document JS-capable (gates the hero entrance sequence),
+ *  - pre-emptively completes the preloader for repeat visits / reduced
+ *    motion so the curtain never flashes,
+ *  - hard fallback: if the app bundle never reports ready within ~4s,
+ *    release the page anyway.
+ */
+const motionScript = `(function(){try{var d=document.documentElement;d.classList.add("js");if(sessionStorage.getItem("nova-preload")==="1"||d.dataset.motion==="reduce"||matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.preload="done";d.dataset.ready="1";}setTimeout(function(){if(!d.dataset.preload&&!d.dataset.ready){d.dataset.preload="done";d.dataset.ready="1";}},4200);}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nova.example.com"),
@@ -52,6 +67,8 @@ export default function RootLayout({
       <head>
         {/* Paint the stored theme before first paint — no flash. */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* Motion-layer boot: JS tag, preloader skip flags, release fallback. */}
+        <script dangerouslySetInnerHTML={{ __html: motionScript }} />
         <link
           rel="preload"
           href="/fonts/geist-latin-400-normal.woff2"
@@ -71,6 +88,12 @@ export default function RootLayout({
         <ThemeProvider>
           <ToastProvider>{children}</ToastProvider>
         </ThemeProvider>
+        {/* Motion layer — brand curtain once per session, custom cursor,
+            smooth scroll, cursor spotlight */}
+        <Preloader />
+        <Cursor />
+        <SmoothScroll />
+        <Spotlight />
       </body>
     </html>
   );

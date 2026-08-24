@@ -58,6 +58,11 @@
   --aurora-1: rgba(41, 151, 255, 0.11);
   --aurora-2: rgba(84, 214, 255, 0.05);
 }
+/* Content sits above the pointer-glow pool (.glow is z-index: 0) */
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
 .heroInner {
   max-width: 900px;
   margin: 0 auto;
@@ -171,13 +176,16 @@
   color: var(--ink-3);
   letter-spacing: 0.01em;
 }
-.logoRow {
-  margin-top: 34px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: clamp(26px, 4.5vw, 54px);
+/* Logo marquee — full-bleed; spacing lives on the items so the
+   -50% loop point stays seamless. */
+.logoMarquee {
+  margin-top: 38px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.logoItem {
+  padding-inline: clamp(26px, 4vw, 46px);
+  flex: none;
 }
 .logoWord {
   color: var(--ink-3);
@@ -497,6 +505,9 @@
 .quoteGapCol:nth-child(2) {
   margin-top: 40px;
 }
+.quoteTilt {
+  border-radius: var(--r-xl);
+}
 .quoteCard {
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
@@ -609,6 +620,46 @@
 .ctaBtnGhost:hover {
   border-color: rgba(255, 255, 255, 0.42);
   background: var(--inv-fill);
+}
+
+/* ---------- Giant marquee band ---------- */
+.giant {
+  border-block: 1px solid var(--line);
+  background: var(--bg-soft);
+  padding-block: clamp(18px, 3vw, 34px);
+  overflow: hidden;
+}
+.giantWord {
+  font-size: clamp(4rem, 9.5vw, 8.5rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  text-transform: uppercase;
+  padding-inline: clamp(16px, 2.4vw, 32px);
+  color: var(--ink);
+  user-select: none;
+  white-space: nowrap;
+}
+.giantOutline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-2);
+}
+.giantSep {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  color: var(--ink-3);
+  padding-inline: clamp(4px, 0.8vw, 12px);
+}
+.giantSep svg {
+  width: clamp(30px, 3.6vw, 48px);
+  height: clamp(30px, 3.6vw, 48px);
+}
+
+/* ---------- CTA panel: content above the glow pool ---------- */
+.ctaPanel > *:not(.ctaGlow) {
+  position: relative;
+  z-index: 1;
 }
 
 /* Touch: keep color feedback, drop sticky lifts */

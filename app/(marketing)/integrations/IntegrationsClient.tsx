@@ -53,6 +53,7 @@ export default function IntegrationsClient() {
             <div
               key={`${cat}-${tool.id}`}
               className={`${m.intTile} ${s.tileIn}`}
+              data-spotlight
               style={{ "--tile-delay": `${Math.min(i, 8) * 35}ms` } as React.CSSProperties}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import TextReveal from "@/components/motion/TextReveal";
 import WorkflowCanvas from "@/components/mock/WorkflowCanvas";
 import { Donut, BarChart, Sparkline } from "@/components/charts";
 import {
@@ -34,7 +35,10 @@ export default function FeaturesPage() {
           <div className={s.pageHeroInner}>
                         <p className="eyebrow">Product</p>
             <h1 className="h-1">
-              Everything a team needs to automate real work.
+              <TextReveal
+                waitReady
+                text="Everything a team needs to automate real work."
+              />
             </h1>
             <p className="lead">
               Agents that take ownership, workflows you can reason about, and

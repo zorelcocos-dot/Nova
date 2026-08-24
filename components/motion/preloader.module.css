@@ -1,0 +1,119 @@
+/* ---------- Preloader ----------
+   Curtain covers the viewport, letters rise in a stagger, a mono
+   counter runs 0→100, then the whole panel lifts away.
+   Kept in sync with the JS constants in Preloader.tsx. */
+
+.pre {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+/* Hairline at the leading edge so the lift reads as a panel, not a fade */
+.pre::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--line-2);
+}
+.pre.exit {
+  animation: preExit 0.72s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+@keyframes preExit {
+  to {
+    transform: translateY(-101%);
+  }
+}
+
+.word {
+  display: flex;
+  font-size: clamp(64px, 12vw, 120px);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  user-select: none;
+}
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.letter {
+  display: inline-block;
+  transform: translateY(112%);
+  animation: letterUp 0.9s var(--ease-out) both;
+}
+@keyframes letterUp {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.meta {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 44px);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  animation: metaIn 0.8s var(--ease-out) 0.35s both;
+}
+@keyframes metaIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.pct {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.bar {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(300px, 58vw);
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+  animation: metaIn 0.8s var(--ease-out) 0.25s both;
+}
+.barFill {
+  width: 100%;
+  height: 100%;
+  background: var(--ink);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 0.12s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter,
+  .meta,
+  .bar {
+    animation-duration: 0.001s;
+    animation-delay: 0s;
+  }
+}

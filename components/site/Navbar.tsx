@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { LogoMark, IconMenu, IconX } from "@/components/icons";
 import { useFocusTrap } from "@/components/hooks";
 import ThemeToggle from "@/components/ThemeToggle";
+import ScrollProgress from "@/components/motion/ScrollProgress";
 import styles from "./navbar.module.css";
 
 const links = [
@@ -83,6 +84,7 @@ export default function Navbar() {
             {open ? <IconX size={22} /> : <IconMenu size={22} />}
           </button>
         </div>
+        <ScrollProgress />
       </header>
 
       {/* Mobile menu */}
