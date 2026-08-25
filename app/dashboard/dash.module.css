@@ -981,6 +981,30 @@
   }
 }
 @media (max-width: 560px) {
+  /* Keep the header useful at narrow phone widths. The original desktop
+     spacing made its six controls exceed a 320px viewport. */
+  .topbar {
+    gap: 8px;
+    padding-inline: 14px;
+  }
+  .crumbRoot,
+  .crumbSep {
+    display: none;
+  }
+  .crumbs {
+    min-width: 0;
+    font-size: 13px;
+  }
+  .crumbPage {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /* The popover is anchored to the bell, which sits before the avatar.
+     Nudge it right so its viewport-width cap still has equal side margins. */
+  .notifPop {
+    right: -36px;
+  }
   .statGrid {
     grid-template-columns: 1fr;
   }
