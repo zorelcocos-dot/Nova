@@ -63,6 +63,10 @@
   position: relative;
   z-index: 1;
 }
+/* Pointer glow pools stay behind content inside their sections */
+.heroGlow {
+  z-index: 0;
+}
 .heroInner {
   max-width: 900px;
   margin: 0 auto;
@@ -657,6 +661,9 @@
 }
 
 /* ---------- CTA panel: content above the glow pool ---------- */
+.ctaGlow {
+  z-index: 0;
+}
 .ctaPanel > *:not(.ctaGlow) {
   position: relative;
   z-index: 1;

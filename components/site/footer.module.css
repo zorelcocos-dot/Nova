@@ -27,6 +27,13 @@
   padding: 72px 0 56px;
 }
 
+.brandCol {
+  min-width: 0;
+}
+.col {
+  min-width: 0;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;

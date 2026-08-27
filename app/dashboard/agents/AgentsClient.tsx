@@ -80,7 +80,7 @@ export default function AgentsClient() {
 
               <div>
                 <div className="caption" style={{ marginBottom: 6 }}>Output · this week</div>
-                <Sparkline data={sparks[a.id]} width={520} height={44} />
+                <Sparkline data={sparks[a.id]} width={520} height={44} fluid />
               </div>
 
               <div className={m.agentCardFoot}>

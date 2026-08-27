@@ -132,10 +132,15 @@ export function Sparkline({
   data,
   width = 96,
   height = 30,
+  fluid = false,
 }: {
   data: number[];
   width?: number;
   height?: number;
+  /** Stretch to the parent's width instead of painting a fixed-size
+      svg — used inside fluid cards where a fixed pixel width would
+      overflow on narrow viewports. */
+  fluid?: boolean;
 }) {
   const max = Math.max(...data);
   const min = Math.min(...data);
@@ -144,12 +149,20 @@ export function Sparkline({
     y: 3 + (1 - (v - min) / Math.max(1, max - min)) * (height - 6),
   }));
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} aria-hidden>
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      width={fluid ? "100%" : width}
+      height={height}
+      preserveAspectRatio="none"
+      style={fluid ? { display: "block" } : undefined}
+      aria-hidden
+    >
       <path
         d={smoothPath(pts)}
         fill="none"
         stroke="currentColor"
         strokeWidth="1.5"
+        vectorEffect="non-scaling-stroke"
         strokeLinecap="round"
       />
     </svg>

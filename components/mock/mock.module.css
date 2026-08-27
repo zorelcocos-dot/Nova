@@ -88,7 +88,6 @@
   display: grid;
   place-items: center;
   font-size: 12px;
-  font-weight: 650;
   font-weight: 600;
 }
 .workspaceName {
@@ -161,12 +160,13 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: var(--line-2);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
   display: grid;
   place-items: center;
   font-size: 10px;
   font-weight: 600;
+  flex: none;
 }
 .sideUserName {
   font-size: 12.5px;
@@ -428,6 +428,7 @@
 /* ---------- Workflow canvas ---------- */
 .canvas {
   position: relative;
+  container-type: inline-size;
   border: 1px solid var(--line);
   border-radius: var(--r-l);
   background:
@@ -829,7 +830,7 @@
 /* ---------- Agent cards (marketing section) ---------- */
 .agentCards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 14px;
 }
 .agentCard {
@@ -1159,9 +1160,12 @@
     display: none;
   }
 }
-/* Workflow canvas switches to a vertical stack below ~960px —
-   the absolute node grid needs ~800px inner width to breathe. */
-@media (max-width: 960px) {
+/* Workflow canvas switches to a vertical stack when the canvas *container*
+   is too narrow — the component lives inside a half-width media column on
+   the features page, so viewport media queries leave the absolute node
+   grid overlapping itself on wide screens. Container queries key off the
+   canvas box itself (~800px inner width needed to breathe). */
+@container (max-width: 880px) {
   .canvasFlow {
     height: auto;
     display: flex;
@@ -1189,7 +1193,7 @@
   }
 }
 
-@media (min-width: 961px) {
+@container (min-width: 881px) {
   .vconn {
     display: none;
   }
@@ -1208,9 +1212,6 @@
   }
   .kpi:nth-child(3) {
     display: none;
-  }
-  .agentCards {
-    grid-template-columns: 1fr;
   }
   .midGrid {
     grid-template-columns: 1fr;

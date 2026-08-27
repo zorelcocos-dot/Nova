@@ -20,7 +20,7 @@ export default function AnalyticsClient() {
     { icon: IconClock, label: "Hours saved", value: hours.toLocaleString(), delta: "+12.4%", spark: data.hoursSaved },
     { icon: IconBolt, label: "Tasks automated", value: tasks.toLocaleString(), delta: "+8.1%", spark: data.tasksAutomated },
     { icon: IconCheck, label: "Approval rate", value: "96.2%", delta: "+1.1%", spark: [31, 28, 32, 35, 33, 36, 38] },
-    { icon: IconAgent, label: "Escalation rate", value: "1.8%", delta: "-0.4%", spark: [12, 11, 10, 9, 9, 8, 8] },
+    { icon: IconAgent, label: "Escalation rate", value: "1.8%", delta: "-0.4%", down: true, spark: [12, 11, 10, 9, 9, 8, 8] },
   ];
 
   return (
@@ -59,7 +59,9 @@ export default function AnalyticsClient() {
               <CountUp key={`${st.label}-${range}`} value={st.value} duration={800} />
             </div>
             <div className={d.statFoot}>
-              <span className={d.statDelta}>↑ {st.delta} vs prior</span>
+              <span className={d.statDelta} style={st.down ? { color: "var(--danger)" } : undefined}>
+                {st.down ? "↓" : "↑"} {st.delta} vs prior
+              </span>
               <span style={{ color: "var(--ink-3)" }}>
                 <Sparkline data={[...st.spark]} width={64} height={22} />
               </span>

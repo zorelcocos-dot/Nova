@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <section className={s.pageHero} style={{ paddingBottom: 110 }}>
-      <div className="container">
-        <div className={s.contactGrid}>
-                    <p className="eyebrow">Contact</p>
+      <div className={`container ${s.contactGrid}`}>
+        <div>
+          <p className="eyebrow">Contact</p>
           <h1 className="h-1" style={{ marginTop: 18 }}>
             Let&rsquo;s talk about your workload.
           </h1>
@@ -46,7 +46,7 @@ export default function ContactPage() {
                 <div className="body-s">San Francisco · Lisbon · Tokyo</div>
               </div>
             </div>
-            <div className={s.contactItem} style={{ borderBottom: "1px solid var(--line)" }}>
+            <div className={s.contactItem}>
               <div className={s.contactItemIcon}><IconClock size={16} /></div>
               <div>
                 <div style={{ fontSize: 14.5, fontWeight: 600 }}>Support hours</div>
@@ -54,12 +54,11 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-        
-
-          <Reveal delay={120}>
-            <ContactForm />
-          </Reveal>
         </div>
+
+        <Reveal delay={120}>
+          <ContactForm />
+        </Reveal>
       </div>
     </section>
   );

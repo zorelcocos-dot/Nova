@@ -112,7 +112,7 @@ export default function FeaturesPage() {
               </div>
               <div>
                 <div className="caption" style={{ marginBottom: 8 }}>Activity · this week</div>
-                <Sparkline data={[22, 31, 28, 44, 39, 52, 61]} width={560} height={60} />
+                <Sparkline data={[22, 31, 28, 44, 39, 52, 61]} width={560} height={60} fluid />
               </div>
               <div className={m.agentCardFoot}>
                 <div className={m.agentStat}><b>{research.tasksPerWeek}</b><span>Tasks / week</span></div>
